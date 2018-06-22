@@ -90,6 +90,7 @@ module.exports = {
     child_process: 'empty'
   },
   externals: {
-    'd3': 'd3'
+    'd3': 'd3',
+    'vkbeautify': 'vkbeautify'
   }
 }
