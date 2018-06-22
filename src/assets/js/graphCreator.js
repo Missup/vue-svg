@@ -8,13 +8,16 @@ import vkbeautify from '../../../static/js/vkbeautify.js'
 
 const Base64 = require('js-base64').Base64
 
-const GraphCreator = function (containerId, svg, nodes, edges, participants) {
+const GraphCreator = function (containerId, svg, initialDate, showPosition, svgGs) {
   var thisGraph = this
 
-  thisGraph.nodes = nodes || []
-  thisGraph.edges = edges || []
-  thisGraph.participants = participants || []
+  thisGraph.nodes = initialDate.nodes || []
+  thisGraph.edges = initialDate.edges || []
+  thisGraph.participants = initialDate.participants || []
   thisGraph.containerId = containerId
+  thisGraph.svg = svg
+  thisGraph.show_position = showPosition
+  thisGraph.svgG = svgGs
 
   thisGraph.state = {
     activeEdit: true,
@@ -30,52 +33,7 @@ const GraphCreator = function (containerId, svg, nodes, edges, participants) {
     drawLine: ''
   }
 
-  // define arrow markers for graph links
-  var defs = svg.append('defs')
-  defs.append('svg:marker')
-    .attr('id', thisGraph.containerId + '-end-arrow')
-    .attr('viewBox', '0 -5 10 10')
-    .attr('refX', 42)
-    .attr('markerWidth', 5)
-    .attr('markerHeight', 5)
-    .attr('orient', 'auto')
-    .append('svg:path')
-    .attr('d', 'M0,-5L10,0L0,5')
-
-  // define arrow markers for leading arrow
-  defs.append('marker')
-    .attr('id', thisGraph.containerId + '-mark-end-arrow')
-    .attr('viewBox', '0 -5 10 10')
-    .attr('refX', 7)
-    .attr('markerWidth', 5)
-    .attr('markerHeight', 5)
-    .attr('orient', 'auto')
-    .append('svg:path')
-    .attr('d', 'M0,-5L10,0L0,5')
-
-  // 定义选中样式的箭头
-  defs.append('marker')
-    .attr('id', thisGraph.containerId + '-selected-end-arrow')
-    .attr('viewBox', '0 -5 10 10')
-    .attr('refX', 30)
-    .attr('markerWidth', 5)
-    .attr('markerHeight', 5)
-    .attr('orient', 'auto')
-    .append('svg:path')
-    .attr('d', 'M0,-5L10,0L0,5')
-    .attr('fill', 'rgb(229, 172, 247)')
-
-  thisGraph.svg = svg
-  thisGraph.show_position = svg.append('text')
-    .attr({
-      'x': 1107,
-      'y': 15,
-      'fill': '#E1784B'
-    })
-  thisGraph.svgG = svg.append('g')
-    .classed(thisGraph.consts.graphClass, true)
   var svgG = thisGraph.svgG
-
   // displayed when dragging between nodes
   thisGraph.dragLine = svgG.append('path')
     .attr('class', 'link dragline hidden')
@@ -211,15 +169,10 @@ const GraphCreator = function (containerId, svg, nodes, edges, participants) {
     }
   })
 
-  $('#flowComponents .components-btn[type]').not('.noComponent').attr('draggable', 'true')
+  $('.sidebar-item').attr('draggable', 'true')
     .on('dragstart', function (ev) {
-      // $('.full-left').css({cursor: 'no-drop'});
       $(this).siblings().removeClass('active').end().addClass('active')
-      $('.full-right>.tab.active .full-right-top').addClass('activate')
-      /* 设置拖动过程显示图片
-      var icon = document.createElement('img');
-      icon.src = $(this).find('img').attr('src');
-      ev.originalEvent.dataTransfer.setDragImage(icon,10,10); */
+      $('.paint').addClass('activate')
       var jsonObj = {
         text: $(this).attr('data-show'),
         component: $(this).attr('name'),
@@ -228,10 +181,10 @@ const GraphCreator = function (containerId, svg, nodes, edges, participants) {
       ev.originalEvent.dataTransfer.setData('tr_data', JSON.stringify(jsonObj))
     })
     .on('dragend', function (ev) {
-      $('.full-right>.tab.active .full-right-top').removeClass('activate')
+      $('.paint').removeClass('activate')
     })
 
-  $('.full-right .tab.active').on('drop', '.svg-container', function (ev) {
+  $('.paint').on('drop', function (ev) {
     ev.stopPropagation()
     ev.preventDefault()
     var position = {

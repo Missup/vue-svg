@@ -74,8 +74,10 @@ export default {
         participants: []
       },
       containerId: 'tab_main',
-      container: null
-      // svg: null
+      container: null,
+      svg: null,
+      showPosition: null,
+      svgGs: null
     }
   },
   methods: {
@@ -84,13 +86,64 @@ export default {
     }
   },
   mounted () {
+    window.graphMain = new GraphCreator(this.containerId, this.svg, this.initialDate, this.showPosition, this.svgGs)
+
     this.container = d3.select('.paint').node()
 
-    d3.select('.paint').append('svg')
+    let svg = d3.select('.paint').append('svg')
       .attr('width', '100%')
       .attr('height', this.container.clientHeight)
+    this.svg = svg
 
-    window.graphMain = new GraphCreator(this.containerId, d3.select('svg'), this.initialDate.nodes, this.initialDate.edges, this.initialDate.participants)
+    window.graphMain.svg = this.svg
+
+    console.log('graphMain', window.graphMain)
+
+    // define arrow markers for graph links
+    let defs = svg.append('defs')
+    defs.append('svg:marker')
+      .attr('id', this.containerId + '-end-arrow')
+      .attr('viewBox', '0 -5 10 10')
+      .attr('refX', 42)
+      .attr('markerWidth', 5)
+      .attr('markerHeight', 5)
+      .attr('orient', 'auto')
+      .append('svg:path')
+      .attr('d', 'M0,-5L10,0L0,5')
+
+    // define arrow markers for leading arrow
+    defs.append('marker')
+      .attr('id', this.containerId + '-mark-end-arrow')
+      .attr('viewBox', '0 -5 10 10')
+      .attr('refX', 7)
+      .attr('markerWidth', 5)
+      .attr('markerHeight', 5)
+      .attr('orient', 'auto')
+      .append('svg:path')
+      .attr('d', 'M0,-5L10,0L0,5')
+
+    // 定义选中样式的箭头
+    defs.append('marker')
+      .attr('id', this.containerId + '-selected-end-arrow')
+      .attr('viewBox', '0 -5 10 10')
+      .attr('refX', 30)
+      .attr('markerWidth', 5)
+      .attr('markerHeight', 5)
+      .attr('orient', 'auto')
+      .append('svg:path')
+      .attr('d', 'M0,-5L10,0L0,5')
+      .attr('fill', 'rgb(229, 172, 247)')
+
+    var showPosition = svg.append('text')
+      .attr({
+        'x': 1107,
+        'y': 15,
+        'fill': '#E1784B'
+      })
+    this.showPosition = showPosition
+
+    this.svgGs = svg.append('g')
+      .classed(window.graphMain.consts.graphClass, true)
   }
 }
 </script>
