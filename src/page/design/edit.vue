@@ -26,25 +26,9 @@
         <i class="iconfont icon-renwu"></i>
         <el-collapse v-model="activeNames" @change="handleChange">
           <el-collapse-item title="任务类型" name="1">
-            <div class="sidebar-item" name="sideCode">
-              <i class="iconfont icon-jiaoben"></i>
-              <span>脚本</span>
-            </div>
-            <div class="sidebar-item" name="sideSql">
-              <i class="iconfont icon-sql"></i>
-              <span>SQL</span>
-            </div>
-            <div class="sidebar-item" name="sideTime">
-              <i class="iconfont icon-jishiqi"></i>
-              <span>延时器</span>
-            </div>
-            <div class="sidebar-item" name="sideTrigger">
-              <i class="iconfont icon-chufaqi"></i>
-              <span>触发器</span>
-            </div>
-            <div class="sidebar-item" name="sideData">
-              <i class="iconfont icon-zhuxingtu"></i>
-              <span>数据流</span>
+            <div class="sidebar-item" draggable v-for="(item, index) in sidebarArr" :key="index" :name="item.name" @dragstart="barDragstart(item, $event)" @dragend="barDragend">
+              <i class="iconfont" :class="item.iconfont"></i>
+              <span>{{ item.spanTxt }}</span>
             </div>
           </el-collapse-item>
         </el-collapse>
@@ -56,17 +40,46 @@
       </div>
       <!-- 画布 -->
       <div class="container">
-        <div class="paint"></div>
+        <div class="paint" @drop="paintDrop($event)" @dragover="paintDragover($event)"></div>
       </div>
     </div>
   </div>
 </template>
 <script>
+/* eslint no-useless-call: "off" */
 import d3 from 'd3'
+import common from '../../assets/js/common.js'
 import GraphCreator from '../../assets/js/graphCreator.js'
 export default {
   data () {
     return {
+      sidebarArr: [
+        {
+          name: 'sideCode',
+          iconfont: 'icon-jiaoben',
+          spanTxt: '脚本'
+        },
+        {
+          name: 'sideSql',
+          iconfont: 'icon-sql',
+          spanTxt: 'SQL'
+        },
+        {
+          name: 'sideTime',
+          iconfont: 'icon-jishiqi',
+          spanTxt: '延时器'
+        },
+        {
+          name: 'sideTrigger',
+          iconfont: 'icon-chufaqi',
+          spanTxt: '触发器'
+        },
+        {
+          name: 'sideData',
+          iconfont: 'icon-zhuxingtu',
+          spanTxt: '数据流'
+        }
+      ],
       activeNames: ['1'],
       initialDate: {
         nodes: [],
@@ -74,30 +87,69 @@ export default {
         participants: []
       },
       containerId: 'tab_main',
-      container: null,
-      svg: null,
-      showPosition: null,
-      svgGs: null
+      container: null
+      // elesObj: {
+      //   svg: null,
+      //   defs: null,
+      //   showPosition: null,
+      //   svgG: null,
+      //   dragLine: null,
+      //   paths: null,
+      //   rects: null
+      // }
     }
   },
   methods: {
     handleChange (val) {
       console.log(val)
+    },
+    barDragstart (val, ev) {
+      let jsonObj = {
+        name: val.name,
+        icon: val.iconfont
+      }
+      ev.dataTransfer.setData('tr_data', JSON.stringify(jsonObj))
+    },
+    barDragend () {
+    },
+    paintDrop (ev) {
+      ev.stopPropagation()
+      ev.preventDefault()
+      let position = {
+        x: parseFloat(ev.offsetX - window.graphMain.consts.nodeWidth / 2),
+        y: parseFloat(ev.offsetY - window.graphMain.consts.nodeHeight / 2)
+      }
+      let data = JSON.parse(ev.dataTransfer.getData('tr_data'))
+      data = Object.assign(data, position)
+
+      let node = window.graphMain.createNode(data)
+      window.graphMain.nodes.push(node)
+
+      console.log('window.graphMain.nodes', window.graphMain.nodes)
+
+      window.graphMain.updateGraph()
+    },
+    paintDragover (ev) {
+      ev.preventDefault()
     }
   },
   mounted () {
-    window.graphMain = new GraphCreator(this.containerId, this.svg, this.initialDate, this.showPosition, this.svgGs)
+    console.log('1212', common.seqerNodeID())
+
+    // window.graphMain = new GraphCreator(this.containerId, this.elesObj, this.initialDate)
+    window.graphMain = new GraphCreator(this.containerId, this.initialDate)
 
     this.container = d3.select('.paint').node()
 
     let svg = d3.select('.paint').append('svg')
       .attr('width', '100%')
       .attr('height', this.container.clientHeight)
-    this.svg = svg
+      .attr('id', 'svg')
 
-    window.graphMain.svg = this.svg
+    // this.elesObj.svg = svg
+    window.graphMain.svg = svg
 
-    console.log('graphMain', window.graphMain)
+    // console.log('graphMain', window.graphMain)
 
     // define arrow markers for graph links
     let defs = svg.append('defs')
@@ -134,16 +186,132 @@ export default {
       .attr('d', 'M0,-5L10,0L0,5')
       .attr('fill', 'rgb(229, 172, 247)')
 
-    var showPosition = svg.append('text')
+    // this.elesObj.defs = defs
+    window.graphMain.defs = defs
+
+    let showPosition = svg.append('text')
       .attr({
         'x': 1107,
         'y': 15,
         'fill': '#E1784B'
       })
-    this.showPosition = showPosition
 
-    this.svgGs = svg.append('g')
+    // this.elesObj.showPosition = showPosition
+    window.graphMain.showPosition = showPosition
+
+    let svgG = svg.append('g')
       .classed(window.graphMain.consts.graphClass, true)
+
+    // this.elesObj.svgG = svgG
+    window.graphMain.svgG = svgG
+
+    // displayed when dragging between nodes
+    let dragLine = svgG.append('path')
+      .attr('class', 'link dragline hidden')
+      .attr('d', 'M0,0L0,0')
+      .style('marker-end', 'url(#' + this.containerId + '-mark-end-arrow)')
+
+    window.graphMain.dragLine = dragLine
+
+    // svg nodes and edges
+    let paths = svgG.append('g').selectAll('g')
+
+    window.graphMain.paths = paths
+
+    let rects = svgG.append('g').selectAll('g')
+
+    window.graphMain.rects = rects
+
+    let drag = d3.behavior.drag()
+      .origin(function (d) {
+        console.log('d', d)
+        // d = selected rect. The drag origin is the origin of the rect
+        return {
+          x: d.x,
+          y: d.y
+        }
+      })
+      .on('dragstart', function () {
+        d3.select(this)
+          .select('rect')
+          .attr('width', String(window.graphMain.consts.nodeWidth))
+          .attr('height', String(window.graphMain.consts.nodeHeight))
+          .attr('rx', String(window.graphMain.consts.nodeRadius))
+          .attr('ry', String(window.graphMain.consts.nodeRadius))
+      })
+      .on('drag', function (args) {
+        window.graphMain.state.justDragged = true
+        window.graphMain.dragmove.call(window.graphMain, args)
+      })
+      .on('dragend', function (args) {
+        // args = rect that was dragged
+        d3.select(this)
+          .select('rect')
+          .attr('width', String(window.graphMain.consts.nodeWidth))
+          .attr('height', String(window.graphMain.consts.nodeHeight))
+          .attr('rx', String(window.graphMain.consts.nodeRadius))
+          .attr('ry', String(window.graphMain.consts.nodeRadius))
+      })
+
+    // listen for key events
+    d3.select(window).on('keydown', function () {
+      window.graphMain.svgKeyDown.call(window.graphMain)
+    })
+      .on('keyup', function () {
+        window.graphMain.svgKeyUp.call(window.graphMain)
+      })
+
+    svg.on('mousedown', function (d) {
+      window.graphMain.svgMouseDown.call(window.graphMain, d)
+    })
+
+    svg.on('mouseup', function (d) {
+      window.graphMain.svgMouseUp.call(window.graphMain, d)
+    })
+
+    svg.on('mousemove', function (d) {
+      window.graphMain.showPosition.text('pos: ' + d3.mouse(window.graphMain.svgG.node())[0].toFixed(0) + ', ' + d3.mouse(window.graphMain.svgG.node())[1].toFixed(0))
+    })
+
+    window.graphMain.drag = drag
+
+    // listen for dragging
+    let dragSvg = d3.behavior.zoom()
+      .scaleExtent([0.3, 2])
+      .on('zoom', function () {
+        // console.log('zoom triggered');
+        if (d3.event.sourceEvent.shiftKey) {
+          // the internal d3 state is still changing
+          return false
+        } else {
+          window.graphMain.zoomed.call(window.graphMain)
+        }
+        return true
+      })
+      .on('zoomstart', function () {
+        // console.log('zoomstart triggered');
+        var ael = d3.select('#' + window.graphMain.consts.activeEditId).node()
+        if (ael) {
+          ael.blur()
+        }
+        if (!d3.event.sourceEvent.shiftKey) d3.select('body').style('cursor', 'move')
+      })
+      .on('zoomend', function () {
+        // console.log('zoomend triggered');
+        d3.select('body').style('cursor', 'auto')
+      })
+
+    window.graphMain.dragSvg = dragSvg
+
+    window.graphMain.svg.call(window.graphMain.dragSvg).on('dblclick.zoom', null)
+
+    // $('svg').on('click', function () {
+    //   $('#rMenu').hide()
+    // })
+    // $('svg').on('contextmenu', function () {
+    //   $('#flowComponents div[name=selectBtn]').trigger('click')
+    //   return false
+    // })
   }
 }
 </script>
@@ -175,6 +343,18 @@ export default {
   }
   .sidebar .el-collapse-item__header {
     padding: 0 10px 0 38px;
+  }
+
+  g.conceptG rect {
+    fill: #15253f;
+    stroke: #2e619e;
+    stroke-width: 1px;
+    fill-opacity: 0.5;
+    stroke-opacity: 0.9;
+  }
+  g.conceptG text {
+    fill: #ffffff;
+    /* text-anchor: middle; */
   }
 </style>
 <style scoped>

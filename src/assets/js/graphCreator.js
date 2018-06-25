@@ -8,16 +8,17 @@ import vkbeautify from '../../../static/js/vkbeautify.js'
 
 const Base64 = require('js-base64').Base64
 
-const GraphCreator = function (containerId, svg, initialDate, showPosition, svgGs) {
+// const GraphCreator = function (containerId, elesObj, initialDate) {
+const GraphCreator = function (containerId, initialDate) {
   var thisGraph = this
 
   thisGraph.nodes = initialDate.nodes || []
   thisGraph.edges = initialDate.edges || []
   thisGraph.participants = initialDate.participants || []
   thisGraph.containerId = containerId
-  thisGraph.svg = svg
-  thisGraph.show_position = showPosition
-  thisGraph.svgG = svgGs
+  thisGraph.svg = null
+  thisGraph.showPosition = null
+  thisGraph.svgG = null
 
   thisGraph.state = {
     activeEdit: true,
@@ -32,186 +33,6 @@ const GraphCreator = function (containerId, svg, initialDate, showPosition, svgG
     selectedText: null,
     drawLine: ''
   }
-
-  var svgG = thisGraph.svgG
-  // displayed when dragging between nodes
-  thisGraph.dragLine = svgG.append('path')
-    .attr('class', 'link dragline hidden')
-    .attr('d', 'M0,0L0,0')
-    .style('marker-end', 'url(#' + thisGraph.containerId + '-mark-end-arrow)')
-
-  // svg nodes and edges
-  thisGraph.paths = svgG.append('g').selectAll('g')
-  thisGraph.circles = svgG.append('g').selectAll('g')
-
-  thisGraph.drag = d3.behavior.drag()
-    .origin(function (d) {
-      // d = selected circle. The drag origin is the origin of the circle
-      return {
-        x: d.x,
-        y: d.y
-      }
-    })
-    .on('dragstart', function () { d3.select(this).select('circle').attr('r', thisGraph.consts.nodeRadius + thisGraph.consts.nodeRadiusVary) })
-    .on('drag', function (args) {
-      thisGraph.state.justDragged = true
-      thisGraph.dragmove.call(thisGraph, args)
-    })
-    .on('dragend', function (args) {
-      // args = circle that was dragged
-      d3.select(this).select('circle').attr('r', thisGraph.consts.nodeRadius - thisGraph.consts.nodeRadiusVary)
-    })
-
-  // listen for key events
-  d3.select(window).on('keydown', function () {
-    thisGraph.svgKeyDown.call(thisGraph)
-  })
-    .on('keyup', function () {
-      thisGraph.svgKeyUp.call(thisGraph)
-    })
-  svg.on('mousedown', function (d) {
-    thisGraph.svgMouseDown.call(thisGraph, d)
-  })
-  svg.on('mouseup', function (d) {
-    thisGraph.svgMouseUp.call(thisGraph, d)
-  })
-  svg.on('mousemove', function (d) {
-    thisGraph.show_position.text('pos: ' + d3.mouse(svgG.node())[0].toFixed(0) + ', ' + d3.mouse(svgG.node())[1].toFixed(0))
-  })
-
-  // listen for dragging
-  var dragSvg = d3.behavior.zoom()
-    .scaleExtent([0.3, 2])
-    .on('zoom', function () {
-      // console.log('zoom triggered');
-      if (d3.event.sourceEvent.shiftKey) {
-        // the internal d3 state is still changing
-        return false
-      } else {
-        thisGraph.zoomed.call(thisGraph)
-      }
-      return true
-    })
-    .on('zoomstart', function () {
-      // console.log('zoomstart triggered');
-      var ael = d3.select('#' + thisGraph.consts.activeEditId).node()
-      if (ael) {
-        ael.blur()
-      }
-      if (!d3.event.sourceEvent.shiftKey) d3.select('body').style('cursor', 'move')
-    })
-    .on('zoomend', function () {
-      // console.log('zoomend triggered');
-      d3.select('body').style('cursor', 'auto')
-    })
-  thisGraph.dragSvg = dragSvg
-  svg.call(dragSvg).on('dblclick.zoom', null)
-
-  // listen for resize
-  window.onresize = function () {
-    thisGraph.updateWindow(svg)
-  }
-
-  // handle download data
-  d3.select('#download-input').on('click', function () {
-    var saveEdges = []
-    thisGraph.edges.forEach(function (val, i) {
-      saveEdges.push({
-        source: val.source.id,
-        target: val.target.id
-      })
-    })
-    var blob = new Blob([window.JSON.stringify({
-      'nodes': thisGraph.nodes,
-      'edges': saveEdges
-    })], {
-      type: 'text/plain;charset=utf-8'
-    })
-    window.saveAs(blob, 'mydag.json')
-  })
-
-  // handle uploaded data
-  d3.select('#upload-input').on('click', function () {
-    document.getElementById('hidden-file-upload').click()
-  })
-  d3.select('#hidden-file-upload').on('change', function () {
-    if (window.File && window.FileReader && window.FileList && window.Blob) {
-      var uploadFile = this.files[0]
-      var filereader = new window.FileReader()
-
-      filereader.onload = function () {
-        var txtRes = filereader.result
-        // better error handling
-        try {
-          var jsonObj = JSON.parse(txtRes)
-          thisGraph.deleteGraph()
-          thisGraph.nodes = jsonObj.nodes
-          var newEdges = jsonObj.edges
-          newEdges.forEach(function (e, i) {
-            newEdges[i] = {
-              source: thisGraph.nodes.filter(function (n) {
-                return n.id === e.source
-              })[0],
-              target: thisGraph.nodes.filter(function (n) {
-                return n.id === e.target
-              })[0]
-            }
-          })
-          thisGraph.edges = newEdges
-          thisGraph.updateGraph()
-        } catch (err) {
-          window.alert('Error parsing uploaded file\nerror message: ' + err.message)
-        }
-      }
-      filereader.readAsText(uploadFile)
-    } else {
-      alert("Your browser won't let you save this graph -- try upgrading your browser to IE 10+ or Chrome or Firefox.")
-    }
-  })
-
-  $('.sidebar-item').attr('draggable', 'true')
-    .on('dragstart', function (ev) {
-      $(this).siblings().removeClass('active').end().addClass('active')
-      $('.paint').addClass('activate')
-      var jsonObj = {
-        text: $(this).attr('data-show'),
-        component: $(this).attr('name'),
-        type: $(this).attr('type')
-      }
-      ev.originalEvent.dataTransfer.setData('tr_data', JSON.stringify(jsonObj))
-    })
-    .on('dragend', function (ev) {
-      $('.paint').removeClass('activate')
-    })
-
-  $('.paint').on('drop', function (ev) {
-    ev.stopPropagation()
-    ev.preventDefault()
-    var position = {
-      x: parseFloat(ev.originalEvent.offsetX),
-      y: parseFloat(ev.originalEvent.offsetY)
-    }
-
-    position = thisGraph.parsePosition(this, position)
-
-    var data = JSON.parse(ev.originalEvent.dataTransfer.getData('tr_data'))
-    data = $.extend(data, position)
-    var node = thisGraph.createNode(data)
-
-    thisGraph.nodes.push(node)
-    thisGraph.updateGraph()
-  })
-    .on('dragover', function (ev) {
-      ev.preventDefault()
-    })
-
-  $('svg').on('click', function () {
-    $('#rMenu').hide()
-  })
-  $('svg').on('contextmenu', function () {
-    $('#flowComponents div[name=selectBtn]').trigger('click')
-    return false
-  })
 
   // // 后置条件-扩展属性集-添加
   // $('.postCondition_extendAttr_add .green.button').on('click', function () {
@@ -1903,14 +1724,17 @@ GraphCreator.prototype.edgesLinkAcivity = function () {
 GraphCreator.prototype.consts = {
   selectedClass: 'selected',
   connectClass: 'connect-node',
-  circleGClass: 'conceptG',
+  rectGClass: 'conceptG',
   graphClass: 'graph',
   activeEditId: 'active-editing',
   BACKSPACE_KEY: 8,
   DELETE_KEY: 46,
   ENTER_KEY: 13,
-  nodeRadius: 34,
-  nodeRadiusVary: 1
+  nodeWidth: 100,
+  nodeHeight: 120,
+  nodeRadius: 4
+  // nodeRadius: 34,
+  // nodeRadiusVary: 1
 }
 
 /**
@@ -2066,7 +1890,7 @@ GraphCreator.prototype.dragmove = function (d) {
     d.y += d3.event.dy
     thisGraph.updateGraph()
     /*
-    // 防止circle脱出svg范围(放大缩小后还存在问题，待修改...)
+    // 防止rect脱出svg范围(放大缩小后还存在问题，待修改...)
     var radius = thisGraph.consts.nodeRadius + thisGraph.consts.nodeRadiusVary,
       svg_width = $('svg').width(),
       svg_heigh = $('svg').height();
@@ -2094,24 +1918,22 @@ GraphCreator.prototype.selectElementContents = function (el) {
 
 /* insert svg line breaks: taken from http://stackoverflow.com/questions/13241475/how-do-i-include-newlines-in-labels-in-d3-charts */
 GraphCreator.prototype.insertTitleLinebreaks = function (gEl, d) {
-  var words = d.title.split(/\s+/g)
-  var nwords = words.length
   var el = gEl.append('text')
-    .attr('text-anchor', 'middle')
-    .attr('letter-spacing', '1')
-  switch (d.type) {
-    case 'start':
-    case 'end':
-      el.attr('dy', '13')
-      break
-    default:
-      el.attr('dy', '-' + (nwords - 1) * 7.5)
-      break
-  }
-  for (var i = 0; i < words.length; i++) {
-    var tspan = el.append('tspan').text(words[i])
-    if (i > 0) { tspan.attr('x', 0).attr('dy', '15') }
-  }
+  el.append('tspan').text(d.title)
+
+  // var svgns = "http://www.w3.org/2000/svg"
+  // var xlinkns = "http://www.w3.org/1999/xlink"
+
+  // var use = document.createElementNS(svgns, 'use')
+  // // use.setAttribute("href", "#icon-18shengmingzhouqi")
+  // use.setAttributeNS(null, "x", 5); 
+  // use.setAttributeNS(null, "y", 5); 
+  // use.setAttributeNS(xlinkns, "xlink:href", "#icon-18shengmingzhouqi") 
+  // // gEl.append(use)
+  // document.getElementById("svg").appendChild(use);
+
+  // el.append('use')
+  //   attr('href', '#icon-18shengmingzhouqi')
 }
 
 // remove edges associated with a node
@@ -2137,7 +1959,7 @@ GraphCreator.prototype.replaceSelectEdge = function (d3Path, edgeData) {
 }
 
 GraphCreator.prototype.replaceSelectNode = function (d3Node, nodeData) {
-  // A circle node has been selected.
+  // A rect node has been selected.
   var thisGraph = this
   d3Node.classed(this.consts.selectedClass, true)
   if (thisGraph.state.selectedNode) {
@@ -2147,10 +1969,10 @@ GraphCreator.prototype.replaceSelectNode = function (d3Node, nodeData) {
 }
 
 GraphCreator.prototype.removeSelectFromNode = function () {
-  // A circle node has been deselected.
+  // A rect node has been deselected.
 
   var thisGraph = this
-  thisGraph.circles.filter(function (cd) {
+  thisGraph.rects.filter(function (cd) {
     return cd.id === thisGraph.state.selectedNode.id
   }).classed(thisGraph.consts.selectedClass, false)
   thisGraph.state.selectedNode = null
@@ -2192,7 +2014,7 @@ GraphCreator.prototype.pathMouseDown = function (d3path, d) {
 }
 
 // mousedown on node
-GraphCreator.prototype.circleMouseDown = function (d3node, d) {
+GraphCreator.prototype.rectMouseDown = function (d3node, d) {
   var thisGraph = this
   var state = thisGraph.state
   d3.event.stopPropagation()
@@ -2214,7 +2036,7 @@ GraphCreator.prototype.circleMouseDown = function (d3node, d) {
 }
 
 // mouseup on nodes
-GraphCreator.prototype.circleMouseUp = function (d3node, d) {
+GraphCreator.prototype.rectMouseUp = function (d3node, d) {
   var thisGraph = this
   var state = thisGraph.state
   var consts = thisGraph.consts
@@ -2291,7 +2113,7 @@ GraphCreator.prototype.circleMouseUp = function (d3node, d) {
   }
   state.mouseDownNode = null
   state.justDragged = false
-} // end of circles mouseup
+} // end of rects mouseup
 
 /**
  * 判断节点是否允许被连线
@@ -2398,7 +2220,7 @@ GraphCreator.prototype.changePropDiv = function (d) {
 GraphCreator.prototype.showMenu = function () {
   var thisGraph = this
   $('#flowComponents div[name=selectBtn]').trigger('click')
-  thisGraph.circles.style({'cursor': 'default'}) // 防止在活动块上右击存在问题
+  thisGraph.rects.style({'cursor': 'default'}) // 防止在活动块上右击存在问题
   var selectedNode = thisGraph.state.selectedNode
   var selectedEdge = thisGraph.state.selectedEdge
   if (selectedNode) {
@@ -2597,10 +2419,10 @@ GraphCreator.prototype.updateGraph = function () {
   paths.exit().remove()
 
   // update existing nodes
-  thisGraph.circles = thisGraph.circles.data(nodes, function (d) {
+  thisGraph.rects = thisGraph.rects.data(nodes, function (d) {
     return d.id
   })
-  thisGraph.circles.attr('transform', function (d) {
+  thisGraph.rects.attr('transform', function (d) {
     if (d === state.selectedNode) { // 更新节点名称
       var tspan = d3.select(this).select('tspan')
       if (tspan.text() !== d.title) {
@@ -2611,11 +2433,11 @@ GraphCreator.prototype.updateGraph = function () {
   })
 
   // add new nodes
-  var newGs = thisGraph.circles.enter()
+  var newGs = thisGraph.rects.enter()
     .append('g')
     .attr({'id': function (d) { return common.generateUUID() }})
 
-  newGs.classed(consts.circleGClass, true)
+  newGs.classed(consts.rectGClass, true)
     .attr('transform', function (d) {
       return 'translate(' + d.x + ',' + d.y + ')'
     })
@@ -2628,15 +2450,18 @@ GraphCreator.prototype.updateGraph = function () {
       d3.select(this).classed(consts.connectClass, false)
     })
     .on('mousedown', function (d) {
-      thisGraph.circleMouseDown.call(thisGraph, d3.select(this), d)
+      thisGraph.rectMouseDown.call(thisGraph, d3.select(this), d)
     })
     .on('mouseup', function (d) {
-      thisGraph.circleMouseUp.call(thisGraph, d3.select(this), d)
+      thisGraph.rectMouseUp.call(thisGraph, d3.select(this), d)
     })
     .call(thisGraph.drag)
 
-  newGs.append('circle')
-    .attr('r', String(consts.nodeRadius))
+  newGs.append('rect')
+    .attr('width', String(consts.nodeWidth))
+    .attr('height', String(consts.nodeHeight))
+    .attr('rx', String(consts.nodeRadius))
+    .attr('ry', String(consts.nodeRadius))
 
   newGs.each(function (d) {
     switch (d.type) {
@@ -2651,7 +2476,7 @@ GraphCreator.prototype.updateGraph = function () {
   })
 
   // remove old nodes
-  thisGraph.circles.exit().remove()
+  thisGraph.rects.exit().remove()
 }
 
 GraphCreator.prototype.zoomed = function () {
@@ -2707,49 +2532,27 @@ GraphCreator.prototype.createSubGraph = function () {
 }
 
 GraphCreator.prototype.createNode = function (data) {
-  var node
-  switch (data.type) {
-    case 'activity':
-      node = {
-        id: common.seqerNodeID.gensym(),
-        title: data.text,
-        component: data.component,
-        type: data.type,
-        x: data.x,
-        y: data.y,
-        conventional: {
-          MustActivity: true,
-          taskAssign: 'taskAutoMode',
-          autoAcceptAllAssignments: true,
-          isResponsible: true,
-          startMode: 'manual',
-          finishMode: 'manual'
-        },
-        frontCondition: {},
-        postCondition: {},
-        extendAttr: [],
-        highLevel: {},
-        timeoutLimit: {},
-        monitorinf: {isResponsibleTem: true},
-        eventTypeId: null
-      }
-      if (data.component === 'blockActivity') {
-        node.activitySet = {
-          activitySetId: common.seqerBlockId.gensym(),
-          graphCreator: null
-        }
-      }
-      break
-    default: // 开始、结束节点
-      node = {
-        id: common.generateUUID(),
-        title: data.text,
-        component: data.component,
-        type: data.type,
-        x: data.x,
-        y: data.y
-      }
-      break
+  var node = {
+    id: common.seqerNodeID().gensym(),
+    title: data.name,
+    icon: data.icon,
+    x: data.x,
+    y: data.y,
+    conventional: {
+      MustActivity: true,
+      taskAssign: 'taskAutoMode',
+      autoAcceptAllAssignments: true,
+      isResponsible: true,
+      startMode: 'manual',
+      finishMode: 'manual'
+    },
+    frontCondition: {},
+    postCondition: {},
+    extendAttr: [],
+    highLevel: {},
+    timeoutLimit: {},
+    monitorinf: {isResponsibleTem: true},
+    eventTypeId: null
   }
   return node
 }

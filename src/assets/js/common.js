@@ -160,24 +160,26 @@ const common = {
     return packageId
   },
   workflowName: '过程',
-  workflowId: this.packageId + '_Wor1',
+  workflowId: function () {
+    return common.packageId() + '_Wor1'
+  },
   createTime: new Date().pattern('yyyy-MM-dd HH:mm:ss'),
   // 定义生成 node id 序列
   seqerNodeID: function () {
     var seqerNodeID = common.serialMarker()
-    seqerNodeID.setPrefix(common.workflowId + '_Act')
+    seqerNodeID.setPrefix(common.workflowId() + '_Act')
     return seqerNodeID
   },
   // 定义生成 edge id 序列
   seqerEdgeID: function () {
     var seqerEdgeID = common.serialMarker()
-    seqerEdgeID.setPrefix(common.workflowId + '_Tra')
+    seqerEdgeID.setPrefix(common.workflowId() + '_Tra')
     return seqerEdgeID
   },
   // 定义生成 参与者id 序列
   seqerParticipantID: function () {
     var seqerParticipantID = common.serialMarker()
-    seqerParticipantID.setPrefix(common.workflowId + '_Par')
+    seqerParticipantID.setPrefix(common.workflowId() + '_Par')
     return seqerParticipantID
   },
   // 定义生成 块活动blockId 序列
