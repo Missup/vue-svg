@@ -106,6 +106,7 @@ document.onload = (function(d3, saveAs, Blob, vkbeautify) {
       .on("keyup", function() {
         thisGraph.svgKeyUp.call(thisGraph);
       });
+
     svg.on("mousedown", function(d) {
       thisGraph.svgMouseDown.call(thisGraph, d);
     });
@@ -207,8 +208,23 @@ document.onload = (function(d3, saveAs, Blob, vkbeautify) {
       } else {
         alert("Your browser won't let you save this graph -- try upgrading your browser to IE 10+ or Chrome or Firefox.");
       }
-
     });
+
+    // 2018.6.26 begin
+    $('#flowComponents .nsidebar-item').attr('draggable', 'true')
+      .on('dragstart', function(ev) {
+        $('.full-right>.tab.active .full-right-top').addClass('activate');
+        var json_obj = {
+          text: $(this).attr('data-show'),
+          component: $(this).attr('name'),
+          type: $(this).attr('type')
+        };
+        ev.originalEvent.dataTransfer.setData('tr_data', JSON.stringify(json_obj));
+      })
+      .on('dragend', function(ev) {
+        $('.full-right>.tab.active .full-right-top').removeClass('activate');
+      });
+    // 2018.6.26 end
 
     $('#flowComponents .components-btn[type]').not('.noComponent').attr('draggable', 'true')
       .on('dragstart', function(ev) {
@@ -2834,12 +2850,14 @@ document.onload = (function(d3, saveAs, Blob, vkbeautify) {
 function initCommonEvent() {
   // 工具栏-导入/导出功能
   $('.editor-toolbar').on('click', '.sign.in,.sign.out', handleImportOrExport);
+  $('.nheader-signout').on('click', handleImportOrExport);
   // 视图显示Tab（图标视图、Xpdl视图、Xml视图）
   $('.full-right').on('click', '.full-right-btn .item', handleViews);
   // 工具栏-删除节点
   $('.editor-toolbar #delete-ele').on('click', handleDeleteNode);
   // 工具栏-放大/缩小按钮 scale(0.3-2)
-  $('.editor-toolbar #zoom-enlarge,#zoom-narrow').on('click.zoom', handleClickZoom);
+  // $('.editor-toolbar #zoom-enlarge,#zoom-narrow').on('click.zoom', handleClickZoom);
+  $('#zoom-enlarge, #zoom-narrow').on('click.zoom', handleClickZoom);
   // 工具栏-还原缩放及归位
   $("#reset-zoom").on("click", resetZoom);
   // 工具栏-帮助
@@ -2850,6 +2868,7 @@ function initCommonEvent() {
   $("#delete-graph").on("click", clearGraph);
   // 工具栏-保存
   $('.editor-toolbar .icon.save').on('click', handleSave);
+  $('.nheader-save').on('click', handleSave);
   // 右键菜单
   $('#rMenu .item').on('click', handleRightMenu);
   // 自动插入开始结束节点

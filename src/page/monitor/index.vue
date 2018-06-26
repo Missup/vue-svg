@@ -1,7 +1,7 @@
 <template>
   <div id="monitor">
     <div class="title">
-    	我的客群列表
+      <span>我的客群列表</span>
       <el-button type="primary" size="medium"><i class="el-icon-upload el-icon--right"></i> 自定义客群</el-button>
     </div>
   </div>

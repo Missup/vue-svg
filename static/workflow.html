@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>flowChart</title>
+  <link rel="stylesheet" href="font/iconfont.css">
   <!-- 顶部菜单icon的css -->
   <link type="text/css" href="js/semantic-ui-2.2.13/dist/semantic.min.css" rel="stylesheet" />
   <link type="text/css" href="css/graph-creator.css" rel="stylesheet" />
@@ -14,6 +15,26 @@
   <link type="text/css" href="css/flowchart.css" rel="stylesheet" />
 </head>
 <body>
+  <!-- 顶部栏 -->
+  <div class="nheader clearfix">
+    <div class="nheader-nav fl">
+      <i class="iconfont icon-18shengmingzhouqi"></i>
+      <a href="#">default</a>
+      /
+      <a href="#">default</a>
+      /
+      <a href="#">test</a>
+    </div>
+    <div class="nheader-btns">
+      <span class="active">设计模式</span><span>调试模式</span>
+    </div>
+    <div class="nheader-actions fr">
+      <span class="nheader-save">保存</span>
+      <span>保存并发布</span>
+      <span class="nheader-signout">导出</span>
+    </div>
+  </div>
+
   <!-- 顶部菜单 -->
   <div class="subheader editor-toolbar">
     <div class="column pop-btn" data-content="保存" data-position="bottom center" data-variation="mini"><i class="save icon"></i></div>
@@ -37,8 +58,100 @@
     <div class="column pop-btn" id="helper" data-content="将左侧活动拖至编辑区" data-position="bottom center" data-variation="mini"><i class="help circle outline icon"></i></div>
   </div>
   <div class="full clearfix">
+    <!-- 缩放 -->
+    <div class="nzoom">
+      <span id="zoom-narrow">-</span>
+      <span id="zoom-txt">100%</span>
+      <span id="zoom-enlarge">+</span>
+    </div>
+
+    <!-- 右侧属性控件 -->
+    <div class="nglobal">
+      <div class="nglobal-title">
+        <span><i class="iconfont icon-18shengmingzhouqi"></i>工作流全局配置</span>
+        <i class="iconfont icon-18shengmingzhouqi"></i>
+      </div>
+      <div class="nglobal-content">
+        <div>
+          <label for="nglobal-name">名称：</label>
+          <input type="text" id="nglobal-name">
+        </div>
+        <div>
+          <label for="nglobal-desc">描述：</label>
+          <input type="text" id="nglobal-desc">
+        </div>
+        <div>
+          <label for="nglobal-time">调度周期：</label>
+          <input type="text" id="nglobal-time">
+        </div>
+        <div>
+          <input type="checkbox" id="nglobal-timeout">
+          <label for="nglobal-timeout">超时设置</label>
+        </div>
+        <div>
+          <label for="nglobal-state">并发度：</label>
+          <input type="text" id="nglobal-state">
+        </div>
+      </div>
+    </div>
+
+    <div class="nsys">
+      <div class="nsys-title">
+        <span><i class="iconfont icon-18shengmingzhouqi"></i>工作流参数配置</span>
+        <i class="iconfont icon-18shengmingzhouqi"></i>
+      </div>
+      <div class="nsys-content">
+        <div>
+          <label for="nsys-id">参数名：</label>
+          <input type="text" id="nsys-name">
+        </div>
+        <div>
+          <span>类型：</span>
+          <span>
+            <input type="radio" id="nsys-const">
+            <label for="nsys-const"></label>
+          </span>
+          <span>
+            <input type="radio" id="nsys-let">
+            <label for="nsys-let"></label>
+          </span>
+        </div>
+        <div>
+          <label for="nsys-id">表达式：</label>
+          <input type="text" id="nsys-compute">
+        </div>
+      </div>
+    </div>
+
     <!-- 左侧控件 -->
     <div id="flowComponents" class="full-left">
+      <div class="nsidebar-title">
+        <span><i class="iconfont icon-18shengmingzhouqi"></i>任务类型</span>
+        <i class="iconfont icon-18shengmingzhouqi"></i>
+      </div>
+      <div class="nsidebar-content">
+        <div class="nsidebar-item" draggable="true" name="code" data-show="脚本" type="activity">
+          <i class="iconfont icon-18shengmingzhouqi"></i>
+          <span>脚本</span>
+        </div>
+        <div class="nsidebar-item" draggable="true" name="sql" data-show="SQL" type="activity">
+          <i class="iconfont icon-18shengmingzhouqi"></i>
+          <span>SQL</span>
+        </div>
+        <div class="nsidebar-item" draggable="true" name="clock" data-show="延时器" type="activity">
+          <i class="iconfont icon-18shengmingzhouqi"></i>
+          <span>延时器</span>
+        </div>
+        <div class="nsidebar-item" draggable="true" name="trigger" data-show="触发器" type="activity">
+          <i class="iconfont icon-18shengmingzhouqi"></i>
+          <span>触发器</span>
+        </div>
+        <div class="nsidebar-item" draggable="true" name="data" data-show="数据流" type="activity">
+          <i class="iconfont icon-18shengmingzhouqi"></i>
+          <span>数据流</span>
+        </div>
+      </div>
+
       <div class="components-btn noComponent clearfix" name="selectBtn">
         <div><i class="tools select-icon"></i><span>选择</span></div>
       </div>
@@ -75,24 +188,22 @@
     </div>
     <!-- 工作区等 -->
     <div class="full-right tab clearfix">
-      <div class="ui top attached tabular mini menu">
+      <!-- <div class="ui top attached tabular mini menu">
           <a class="item active" data-tab="tab_main">
             <i class="remove red icon"></i>过程
           </a>
-      </div>
+      </div> -->
       <div class="ui bottom attached tab active" data-tab="tab_main">
           <form id="containerForm" method="post" action="">
           <div id="container" class="ui top attached tab active full-right-top view svg-container" data-tab="first">
             <!-- svg -->
           </div>
-          <div id="xpdlContainer" class="ui top attached tab view content-div" data-tab="second">
+          <!-- <div id="xpdlContainer" class="ui top attached tab view content-div" data-tab="second">
             <xmp>
-              <!-- xpdl -->
             </xmp>
           </div>
           <div id="xmlContainer" class="ui top attached tab view content-div" data-tab="third">
             <xmp>
-              <!-- xml -->
             </xmp>
           </div>
           <div class="full-right-btn ui bottom attached tabular mini menu">
@@ -103,9 +214,8 @@
           <div id="propertiesWrapper" class="full-right-bottom">
             <div class="component-name"><i class="angle double down icon"></i><span></span></div>
             <div class="component-prop content-div">
-              <!-- activity属性 -->
             </div>
-          </div>
+          </div> -->
 
           <input name="xpdlcontent" type="hidden" value="">
           <input name="xmlcontent" type="hidden" value="">

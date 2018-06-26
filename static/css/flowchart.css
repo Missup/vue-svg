@@ -38,12 +38,14 @@ html, body {
 .field textarea { resize: none !important; }
 
 .subheader { 
-    min-height: 34px;
-    height: 6%;
-    box-sizing: border-box;
-    border-bottom: 1px solid #58a5f3; 
-    padding-top: 10px; 
-    padding-left: 6px; 
+    height: 50px;
+    padding-top: 16px; 
+    padding-left: 6px;
+    background-color: #122239;
+    position: absolute;
+    top: 56px;
+    left: 300px;
+    z-index: 10;
 }
 .subheader .column { 
     display: inline-block; 
@@ -65,8 +67,8 @@ html, body {
 .editor-toolbar .icon:hover { color: #21BA45; }
 
 .full {
-    height: 94%; 
-    box-sizing: border-box; 
+    height: 100%;
+    position: relative;
 }
 
 .full-left,.full-right { 
@@ -75,22 +77,24 @@ html, body {
 }
 
 .full-left { 
-    width: 9%; 
-    padding: 5px; 
-    border-right: 1px solid #58a5f3;
+    width: 112px;
+    background-color: #1f3655;
+    position: absolute;
+    top: 6px;
 }
 
 .full-right { 
-    width: 91%;
+    width: 100%;
+    /* width: 91%;
     padding-top: 4px;
-    padding-left: 6px;
+    padding-left: 6px; */
 }
 
 .full-right>.tab { 
-    height: 95%; 
-    padding: 6px;
-    border-left: 1px solid #d4d4d5;
-    border-right: 1px solid #d4d4d4;
+    height: 100%; 
+    /* padding: 6px; */
+    /* border-left: 1px solid #d4d4d5; */
+    /* border-right: 1px solid #d4d4d4; */
 }
 
 .full-right>.menu {
@@ -105,8 +109,8 @@ html, body {
 
 .full-right-top { 
     background-image: url(data:image/gif;base64,R0lGODlhCgAKALMAABEVIQ4SHhIWIhQYJBMXIxgcKBAUIBcbJxUZJRYaJgAAAAAAAAAAAAAAAAAAAAAAACH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS4zLWMwMTEgNjYuMTQ1NjYxLCAyMDEyLzAyLzA2LTE0OjU2OjI3ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDoxMjc4OEMwNTc1MkQxMUU4QTFFNEVGOTVCREQ2RUQzOSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDoxMjc4OEMwNjc1MkQxMUU4QTFFNEVGOTVCREQ2RUQzOSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjEyNzg4QzAzNzUyRDExRThBMUU0RUY5NUJERDZFRDM5IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjEyNzg4QzA0NzUyRDExRThBMUU0RUY5NUJERDZFRDM5Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEgHx4dHBsaGRgXFhUUExIREA8ODQwLCgkIBwYFBAMCAQAAIfkEAAAAAAAsAAAAAAoACgAABCmQoFNOogcZVBJKyXAQW/eFY+mBIsmtqGuy6Xu26l3PcWAIAoABADREAAA7)!important; 
-    box-sizing: border-box; 
-    border: 1px dashed #FFF; 
+    /* box-sizing: border-box;  */
+    /* border: 1px dashed #FFF;  */
 }
 
 .full-right-top.activate {
@@ -114,7 +118,7 @@ html, body {
 }
 
 .view { 
-    height: 68%; 
+    height: 100%; 
 }
 
 .full-right-btn { 
@@ -472,6 +476,11 @@ html, body {
     overflow-x: hidden;
 }
 
+/* 2018.6.26 */
+body {
+    position: relative;
+}
+
 .ui.tabular.menu .item {
     color: #fff;
 }
@@ -487,4 +496,137 @@ html, body {
 
 .layui-layer-dialog .layui-layer-content {
     color: #333;
+}
+/* header */
+.nheader {
+    width: 100%;
+    background-color: #15253f;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 14px;
+    padding-left: 12px;
+    padding-right: 24px;
+}
+.nheader-nav a {
+    margin: 0 6px;
+}
+.nheader-btns {
+    display: inline-block;
+}
+.nheader-btns span {
+    display: inline-block;
+    width: 82px;
+    height: 32px;
+    line-height: 32px;
+    background-color: #27436a;
+    cursor: pointer;
+}
+.nheader-btns span:first-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+.nheader-btns span:last-child {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+.nheader-btns span.active {
+    background-color: #3ba8fb;
+}
+.nheader-actions span {
+    display: inline-block;
+    height: 32px;
+    line-height: 32px;
+    cursor: pointer;
+    background-color: #00b187;
+    padding: 0 24px;
+    border-radius: 4px;
+    margin-left: 4px;
+}
+.nheader-actions span:last-child {
+    background-color: #3aa8fd;
+}
+/* zoom */
+.nzoom {
+    height: 30px;
+    line-height: 30px;
+    position: absolute;
+    background-color: #132239;
+    left: 118px;
+    top: 6px;
+}
+.nzoom span {
+    float: left;
+    text-align: center;
+}
+#zoom-narrow, #zoom-enlarge {
+    width: 28px;
+    cursor: pointer;
+}
+#zoom-txt {
+    width: 52px;
+}
+/* sidebanr */
+.nsidebar-title {
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    cursor: pointer;
+}
+.nsidebar-content {
+    background-color: #1b2f48;
+    padding: 10px 0 20px;
+}
+.nsidebar-item {
+    width: 84px;
+    height: 84px;
+    margin: 10px auto 0;
+    text-align: center;
+    background-color: #15253f;
+    border-radius: 4px;
+    padding-top: 22px;
+    cursor: pointer;
+}
+.nsidebar-item span {
+    display: block;
+}
+/* 右侧控件 */
+.nglobal, .nsys {
+    position: absolute;
+    right: 0;
+    top: 6px;
+    background-color: #21345c;
+    width: 280px;
+}
+.nsys {
+    top:  250px;
+}
+.nglobal-title, .nsys-title {
+    height: 40px;
+    line-height: 40px;
+    padding: 0 14px;
+    cursor: pointer;
+}
+.nglobal-content, .nsys-content {
+    background-color: #1b2f47;
+    padding: 14px;
+}
+.nglobal-content div, .nsys-content div {
+    margin-bottom: 10px;
+}
+.nglobal-content div:last-child, .nsys-content div:last-child {
+    margin-bottom: 0;
+}
+.nglobal-content label {
+    width: 70px;
+    display: inline-block;
+}
+.nglobal-content input[type=text] {
+    height: 28px;
+    border: 1px solid #475b76;
+    border-radius: 4px;
+    background-color: #1a2b47;
+    padding: 0 4px;
+    color: #fff;
+    width: 178px;
 }
