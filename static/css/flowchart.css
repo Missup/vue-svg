@@ -481,7 +481,7 @@ html, body {
 .ui.tabular.menu .active.item:hover {
     color: #000;
 }
-.ui.segment {
+.ui.segment.blockDiv  {
     background-color: transparent;
 }
 

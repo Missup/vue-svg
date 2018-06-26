@@ -262,6 +262,9 @@ function handleViews() {
   }
 }
 
+/**
+ * 工具栏-保存
+ */
 function handleSave() {
   var dataTab = $('.full-right-btn .item.active').attr('data-tab');
   $('.tab[data-tab="tab_main"] .item').not($('.full-right-btn .item.active')).trigger('click'); // 触发点击事件获取xpdl和xml

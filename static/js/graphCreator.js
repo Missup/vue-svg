@@ -2832,16 +2832,27 @@ document.onload = (function(d3, saveAs, Blob, vkbeautify) {
 })(window.d3, window.saveAs, window.Blob, vkbeautify);
 
 function initCommonEvent() {
+  // 工具栏-导入/导出功能
   $('.editor-toolbar').on('click', '.sign.in,.sign.out', handleImportOrExport);
+  // 视图显示Tab（图标视图、Xpdl视图、Xml视图）
   $('.full-right').on('click', '.full-right-btn .item', handleViews);
+  // 工具栏-删除节点
   $('.editor-toolbar #delete-ele').on('click', handleDeleteNode);
+  // 工具栏-放大/缩小按钮 scale(0.3-2)
   $('.editor-toolbar #zoom-enlarge,#zoom-narrow').on('click.zoom', handleClickZoom);
+  // 工具栏-还原缩放及归位
   $("#reset-zoom").on("click", resetZoom);
+  // 工具栏-帮助
   $('#helper').on('click', handleHelp);
+  // 左侧组件
   $('#flowComponents .components-btn').on('click', handleComponentsBtn);
+  // 工具栏-清空
   $("#delete-graph").on("click", clearGraph);
+  // 工具栏-保存
   $('.editor-toolbar .icon.save').on('click', handleSave);
+  // 右键菜单
   $('#rMenu .item').on('click', handleRightMenu);
+  // 自动插入开始结束节点
   $('.full-left [name=addStartEndBtn]').on('click', handleAddStartEnd);
 }
 
