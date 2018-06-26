@@ -1920,20 +1920,6 @@ GraphCreator.prototype.selectElementContents = function (el) {
 GraphCreator.prototype.insertTitleLinebreaks = function (gEl, d) {
   var el = gEl.append('text')
   el.append('tspan').text(d.title)
-
-  // var svgns = "http://www.w3.org/2000/svg"
-  // var xlinkns = "http://www.w3.org/1999/xlink"
-
-  // var use = document.createElementNS(svgns, 'use')
-  // // use.setAttribute("href", "#icon-18shengmingzhouqi")
-  // use.setAttributeNS(null, "x", 5); 
-  // use.setAttributeNS(null, "y", 5); 
-  // use.setAttributeNS(xlinkns, "xlink:href", "#icon-18shengmingzhouqi") 
-  // // gEl.append(use)
-  // document.getElementById("svg").appendChild(use);
-
-  // el.append('use')
-  //   attr('href', '#icon-18shengmingzhouqi')
 }
 
 // remove edges associated with a node
@@ -2349,6 +2335,7 @@ GraphCreator.prototype.updateGraph = function () {
   thisGraph.paths = thisGraph.paths.data(edges, function (d) {
     return String(d.source.id) + '+' + String(d.target.id)
   })
+
   var paths = thisGraph.paths
   // update existing paths
   var link = paths.style('marker-end', 'url(#' + thisGraph.containerId + '-end-arrow)')

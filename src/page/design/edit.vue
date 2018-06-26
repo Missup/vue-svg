@@ -16,7 +16,7 @@
         </el-button-group>
       </div>
       <div class="header-actions fr">
-        <el-button type="success" size="small">保存</el-button>
+        <el-button type="success" size="small" @click="goTest">保存</el-button>
         <el-button type="success" size="small">保存并发布</el-button>
         <el-button type="primary" size="small">导出</el-button>
       </div>
@@ -40,7 +40,25 @@
       </div>
       <!-- 画布 -->
       <div class="container">
-        <div class="paint" @drop="paintDrop($event)" @dragover="paintDragover($event)"></div>
+        <div class="paint" @drop="paintDrop($event)" @dragover="paintDragover($event)">
+          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" @mousedown="svgMouseDown" @mouseup="svgMouseUp" @mousemove="svgMouseMove">
+            <defs>
+              <marker id="tab_main-end-arrow" viewBox="0 -5 10 10" refX="42" markerWidth="5" markerHeight="5" orient="auto">
+                <path d="M0,-5L10,0L0,5"></path>
+              </marker>
+              <marker id="tab_main-mark-end-arrow" viewBox="0 -5 10 10" refX="7" markerWidth="5" markerHeight="5" orient="auto">
+                <path d="M0,-5L10,0L0,5"></path>
+              </marker>
+              <marker id="tab_main-selected-end-arrow" viewBox="0 -5 10 10" refX="30" markerWidth="5" markerHeight="5" orient="auto">
+                <path d="M0,-5L10,0L0,5" fill="rgb(229, 172, 247)"></path>
+              </marker>
+            </defs>
+            <text x="1107" y="15" fill="#E1784B" class="position"></text>
+            <g class="graph">
+              <path class="link dragline hidden" d="M0,0L0,0" style="marker-end: url('#tab_main-mark-end-arrow');"></path>
+            </g>
+          </svg>
+        </div>
       </div>
     </div>
   </div>
@@ -48,7 +66,7 @@
 <script>
 /* eslint no-useless-call: "off" */
 import d3 from 'd3'
-import common from '../../assets/js/common.js'
+// import common from '../../assets/js/common.js'
 import GraphCreator from '../../assets/js/graphCreator.js'
 export default {
   data () {
@@ -86,20 +104,13 @@ export default {
         edges: [],
         participants: []
       },
-      containerId: 'tab_main',
-      container: null
-      // elesObj: {
-      //   svg: null,
-      //   defs: null,
-      //   showPosition: null,
-      //   svgG: null,
-      //   dragLine: null,
-      //   paths: null,
-      //   rects: null
-      // }
+      containerId: 'tab_main'
     }
   },
   methods: {
+    goTest () {
+      this.$router.push({ path: '/design/test' })
+    },
     handleChange (val) {
       console.log(val)
     },
@@ -131,100 +142,32 @@ export default {
     },
     paintDragover (ev) {
       ev.preventDefault()
+    },
+    svgMouseDown () {
+      window.graphMain.svgMouseDown.call(window.graphMain, undefined)
+    },
+    svgMouseUp () {
+      window.graphMain.svgMouseUp.call(window.graphMain, undefined)
+    },
+    svgMouseMove () {
+      
+      console.log(111111, d3.mouse(d3.select('g.graph').node()))
+      // window.graphMain.showPosition.text('pos: ' + d3.mouse(window.graphMain.svgG.node())[0].toFixed(0) + ', ' + d3.mouse(window.graphMain.svgG.node())[1].toFixed(0))
     }
   },
   mounted () {
-    console.log('1212', common.seqerNodeID())
-
-    // window.graphMain = new GraphCreator(this.containerId, this.elesObj, this.initialDate)
     window.graphMain = new GraphCreator(this.containerId, this.initialDate)
 
-    this.container = d3.select('.paint').node()
-
-    let svg = d3.select('.paint').append('svg')
-      .attr('width', '100%')
-      .attr('height', this.container.clientHeight)
-      .attr('id', 'svg')
-
-    // this.elesObj.svg = svg
-    window.graphMain.svg = svg
-
-    // console.log('graphMain', window.graphMain)
-
-    // define arrow markers for graph links
-    let defs = svg.append('defs')
-    defs.append('svg:marker')
-      .attr('id', this.containerId + '-end-arrow')
-      .attr('viewBox', '0 -5 10 10')
-      .attr('refX', 42)
-      .attr('markerWidth', 5)
-      .attr('markerHeight', 5)
-      .attr('orient', 'auto')
-      .append('svg:path')
-      .attr('d', 'M0,-5L10,0L0,5')
-
-    // define arrow markers for leading arrow
-    defs.append('marker')
-      .attr('id', this.containerId + '-mark-end-arrow')
-      .attr('viewBox', '0 -5 10 10')
-      .attr('refX', 7)
-      .attr('markerWidth', 5)
-      .attr('markerHeight', 5)
-      .attr('orient', 'auto')
-      .append('svg:path')
-      .attr('d', 'M0,-5L10,0L0,5')
-
-    // 定义选中样式的箭头
-    defs.append('marker')
-      .attr('id', this.containerId + '-selected-end-arrow')
-      .attr('viewBox', '0 -5 10 10')
-      .attr('refX', 30)
-      .attr('markerWidth', 5)
-      .attr('markerHeight', 5)
-      .attr('orient', 'auto')
-      .append('svg:path')
-      .attr('d', 'M0,-5L10,0L0,5')
-      .attr('fill', 'rgb(229, 172, 247)')
-
-    // this.elesObj.defs = defs
-    window.graphMain.defs = defs
-
-    let showPosition = svg.append('text')
-      .attr({
-        'x': 1107,
-        'y': 15,
-        'fill': '#E1784B'
-      })
-
-    // this.elesObj.showPosition = showPosition
-    window.graphMain.showPosition = showPosition
-
-    let svgG = svg.append('g')
-      .classed(window.graphMain.consts.graphClass, true)
-
-    // this.elesObj.svgG = svgG
-    window.graphMain.svgG = svgG
-
-    // displayed when dragging between nodes
-    let dragLine = svgG.append('path')
-      .attr('class', 'link dragline hidden')
-      .attr('d', 'M0,0L0,0')
-      .style('marker-end', 'url(#' + this.containerId + '-mark-end-arrow)')
-
-    window.graphMain.dragLine = dragLine
-
-    // svg nodes and edges
-    let paths = svgG.append('g').selectAll('g')
-
-    window.graphMain.paths = paths
-
-    let rects = svgG.append('g').selectAll('g')
-
-    window.graphMain.rects = rects
+    window.graphMain.svg = d3.select('svg')
+    window.graphMain.defs = d3.select('defs')
+    window.graphMain.showPosition = d3.select('text.position')
+    window.graphMain.svgG = d3.select('g.graph')
+    window.graphMain.dragLine = d3.select('path')
+    window.graphMain.paths = d3.select('g.graph').append('g').selectAll('g')
+    window.graphMain.rects = d3.select('g.graph').append('g').selectAll('g')
 
     let drag = d3.behavior.drag()
       .origin(function (d) {
-        console.log('d', d)
         // d = selected rect. The drag origin is the origin of the rect
         return {
           x: d.x,
@@ -260,18 +203,6 @@ export default {
       .on('keyup', function () {
         window.graphMain.svgKeyUp.call(window.graphMain)
       })
-
-    svg.on('mousedown', function (d) {
-      window.graphMain.svgMouseDown.call(window.graphMain, d)
-    })
-
-    svg.on('mouseup', function (d) {
-      window.graphMain.svgMouseUp.call(window.graphMain, d)
-    })
-
-    svg.on('mousemove', function (d) {
-      window.graphMain.showPosition.text('pos: ' + d3.mouse(window.graphMain.svgG.node())[0].toFixed(0) + ', ' + d3.mouse(window.graphMain.svgG.node())[1].toFixed(0))
-    })
 
     window.graphMain.drag = drag
 
