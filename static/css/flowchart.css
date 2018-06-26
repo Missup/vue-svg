@@ -60,7 +60,7 @@ html, body {
     border-right: 1px solid #c7cacd; 
 }
 
-.editor-toolbar .icon { color: #3B5998; }
+.editor-toolbar .icon { color: #fff; }
 
 .editor-toolbar .icon:hover { color: #21BA45; }
 
@@ -104,7 +104,7 @@ html, body {
 .full-right form { height: 100%; }
 
 .full-right-top { 
-    background-image: url(data:image/gif;base64,R0lGODlhCgAKAIAAAPPz89/f3ywAAAAACgAKAAACEQyOaJnL515ksz11YQah+18AADs=)!important; 
+    background-image: url(data:image/gif;base64,R0lGODlhCgAKALMAABEVIQ4SHhIWIhQYJBMXIxgcKBAUIBcbJxUZJRYaJgAAAAAAAAAAAAAAAAAAAAAAACH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS4zLWMwMTEgNjYuMTQ1NjYxLCAyMDEyLzAyLzA2LTE0OjU2OjI3ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDoxMjc4OEMwNTc1MkQxMUU4QTFFNEVGOTVCREQ2RUQzOSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDoxMjc4OEMwNjc1MkQxMUU4QTFFNEVGOTVCREQ2RUQzOSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjEyNzg4QzAzNzUyRDExRThBMUU0RUY5NUJERDZFRDM5IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjEyNzg4QzA0NzUyRDExRThBMUU0RUY5NUJERDZFRDM5Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEgHx4dHBsaGRgXFhUUExIREA8ODQwLCgkIBwYFBAMCAQAAIfkEAAAAAAAsAAAAAAoACgAABCmQoFNOogcZVBJKyXAQW/eFY+mBIsmtqGuy6Xu26l3PcWAIAoABADREAAA7)!important; 
     box-sizing: border-box; 
     border: 1px dashed #FFF; 
 }
@@ -143,8 +143,9 @@ html, body {
 }
 
 .components-btn:hover { 
-    background: #e6e7f5; 
+    background: #fff; 
     border-radius: 3px;
+    color: #000;
 }
 
 .components-btn:not(.noComponent):hover span:after {
@@ -154,8 +155,9 @@ html, body {
 }
 
 .components-btn.active { 
-    background: #e6e7f5;
+    background: #fff;
     border-radius: 3px;
+    color: #000;
 }
 
 .components-btn span { 
@@ -237,7 +239,7 @@ html, body {
     height: 28%;
     margin-left: 1px;
     font-size: 17px;
-    background: #EDE8F1;
+    background: #15253f;
     border-bottom: 1px solid #ADACB8;
     line-height: 34px;
     padding-left: 7px;
@@ -276,8 +278,9 @@ html, body {
 
 #xmlContainer xmp, #xpdlContainer xmp { 
     margin: 0px; 
-    color: #736c6c; 
-    padding: 8px; 
+    color: #fff; 
+    padding: 8px;
+    font-size: 14px;
 }
 
 #xmlContainer script { display: block; }
@@ -469,3 +472,19 @@ html, body {
     overflow-x: hidden;
 }
 
+.ui.tabular.menu .item {
+    color: #fff;
+}
+.ui.tabular.menu .item:hover {
+    color: #fff;
+}
+.ui.tabular.menu .active.item:hover {
+    color: #000;
+}
+.ui.segment {
+    background-color: transparent;
+}
+
+.layui-layer-dialog .layui-layer-content {
+    color: #333;
+}

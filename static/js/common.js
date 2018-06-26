@@ -242,7 +242,6 @@ var graphPool = {
 	pools: [],
 	updateGraphActiveById: function(containerId) {
 	  this.pools.forEach(function(graph) {
-	  	console.log('graph', graph)
 	    if (graph.containerId === containerId) {
 	    	// 确保当前点击的是true
 	      	graph.state.activeEdit = true;
@@ -253,7 +252,6 @@ var graphPool = {
 	},
 	getGraphByActiveEdit: function() {
 	  	var graph_active = this.pools.find(function(graph) {
-	  		console.log(123, graph)
 	    	return graph.state.activeEdit;
 	  	});
 	  	return graph_active;
@@ -328,5 +326,3 @@ if (!String.prototype.includes) {
     }
   };
 }*/
-
-export {cc, ccMoney, json_obj, getRandom, randomWord, generateUUID, serial_marker, getNodeById, maxArr, minArr, is_array, is_number, graphPool, changeCase}

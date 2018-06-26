@@ -5,8 +5,6 @@ document.onload = (function(d3, saveAs, Blob, vkbeautify) {
   // define graphcreator object
   var GraphCreator = function(containerId, svg, nodes, edges, participants) {
     var thisGraph = this;
-    console.log('thisGraph:');
-    console.log(thisGraph);
 
     thisGraph.nodes = nodes || [];
     thisGraph.edges = edges || [];
@@ -2820,8 +2818,6 @@ document.onload = (function(d3, saveAs, Blob, vkbeautify) {
   /**** MAIN ****/
   var container = d3.select('[data-tab="tab_main"] .svg-container').node(),
     containerId = 'tab_main';
-
-    console.log('12122313213123', d3, d3.select('[data-tab="tab_main"] .svg-container'))
 
   var svg = d3.select('[data-tab="tab_main"] .svg-container').append("svg")
     .attr("width", "100%")

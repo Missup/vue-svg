@@ -1,5 +1,3 @@
-import {cc, ccMoney, json_obj, getRandom, randomWord, generateUUID, serial_marker, getNodeById, maxArr, minArr, is_array, is_number, graphPool, changeCase} from './common.js'
-
 /**
  * 工具栏-导入/导出功能
  */
@@ -75,13 +73,10 @@ function handleDeleteNode() {
   var graph_active = graphPool.getGraphByActiveEdit();
   var selectedNode = graph_active.state.selectedNode,
     selectedEdge = graph_active.state.selectedEdge;
-  console.log(777, graph_active, selectedNode, selectedEdge)
   if (!selectedNode && !selectedEdge) {
-    console.log(111111, layer)
     layer.msg('请选中元素！', {time: 2000, icon: 0, offset: '180px'});
     return;
   } else {
-    console.log(33333)
     layer.confirm('确定要删除选择元素吗？', {
       icon: 0,
       btn: ['确定','取消'],
@@ -679,5 +674,3 @@ function edgeAssociateNode(jsonObj) {
   });
   return jsonObj;
 }
-
-export {handleImportOrExport, clearGraph, handleDeleteNode, handleClickZoom, resetZoom, handleHelp, handleComponentsBtn, handleAddStartEnd, handleViews, handleSave, handleMenuEdit, handleNodeMenuProp, handleEdgeMenuProp, handleRightMenu}
