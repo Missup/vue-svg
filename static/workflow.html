@@ -18,7 +18,7 @@
   <!-- 顶部栏 -->
   <div class="nheader clearfix">
     <div class="nheader-nav fl">
-      <i class="iconfont icon-18shengmingzhouqi"></i>
+      <i class="iconfont icon-zhankai"></i>
       <a href="#">default</a>
       /
       <a href="#">default</a>
@@ -68,8 +68,8 @@
     <!-- 右侧属性控件 -->
     <div class="nglobal">
       <div class="nglobal-title">
-        <span><i class="iconfont icon-18shengmingzhouqi"></i>工作流全局配置</span>
-        <i class="iconfont icon-18shengmingzhouqi"></i>
+        <span><i class="iconfont icon-peizhi"></i>工作流全局配置</span>
+        <i class="iconfont icon-zhankai1"></i>
       </div>
       <div class="nglobal-content">
         <div>
@@ -86,7 +86,10 @@
         </div>
         <div>
           <input type="checkbox" id="nglobal-timeout">
-          <label for="nglobal-timeout">超时设置</label>
+          <label for="nglobal-timeout" class="active">超时设置</label>
+          <span>
+            <input type="text"> 小时 <input type="text"> 分钟
+          </span>
         </div>
         <div>
           <label for="nglobal-state">并发度：</label>
@@ -97,8 +100,8 @@
 
     <div class="nsys">
       <div class="nsys-title">
-        <span><i class="iconfont icon-18shengmingzhouqi"></i>工作流参数配置</span>
-        <i class="iconfont icon-18shengmingzhouqi"></i>
+        <span><i class="iconfont icon-geziliebiao"></i>工作流参数配置</span>
+        <i class="iconfont icon-zhankai1"></i>
       </div>
       <div class="nsys-content">
         <div>
@@ -106,48 +109,61 @@
           <input type="text" id="nsys-name">
         </div>
         <div>
-          <span>类型：</span>
+          <span class="active">类型：</span>
           <span>
-            <input type="radio" id="nsys-const">
-            <label for="nsys-const"></label>
+            <input name="sys" type="radio" checked="checked" id="nsys-const">
+            <label for="nsys-const" class="active">常量</label>
           </span>
           <span>
-            <input type="radio" id="nsys-let">
-            <label for="nsys-let"></label>
+            <input name="sys" type="radio" id="nsys-let">
+            <label for="nsys-let" class="active">变量</label>
           </span>
         </div>
         <div>
           <label for="nsys-id">表达式：</label>
           <input type="text" id="nsys-compute">
         </div>
+        <input type="button" value="添加" disabled="disabled">
+        <div class="nsys-footer">
+          <div class="nsys-footer-line">
+            brief = some infomation
+            <i>x</i>
+          </div>
+        </div>
       </div>
+    </div>
+
+    <div class="nlines clearfix">
+      <div class="nlines-normal">正常<span></span></div>
+      <div class="nlines-error">错误<span></span></div>
+      <div class="nlines-pass">错误跳过<span></span></div>
     </div>
 
     <!-- 左侧控件 -->
     <div id="flowComponents" class="full-left">
       <div class="nsidebar-title">
-        <span><i class="iconfont icon-18shengmingzhouqi"></i>任务类型</span>
-        <i class="iconfont icon-18shengmingzhouqi"></i>
+        <span><i class="iconfont icon-zhankai"></i>任务类型</span>
+        <i class="iconfont icon-zhankai1"></i>
       </div>
       <div class="nsidebar-content">
         <div class="nsidebar-item" draggable="true" name="code" data-show="脚本" type="activity">
-          <i class="iconfont icon-18shengmingzhouqi"></i>
+          <i class="iconfont icon-jiaoben"></i>
           <span>脚本</span>
         </div>
         <div class="nsidebar-item" draggable="true" name="sql" data-show="SQL" type="activity">
-          <i class="iconfont icon-18shengmingzhouqi"></i>
+          <i class="iconfont icon-sql"></i>
           <span>SQL</span>
         </div>
         <div class="nsidebar-item" draggable="true" name="clock" data-show="延时器" type="activity">
-          <i class="iconfont icon-18shengmingzhouqi"></i>
+          <i class="iconfont icon-jishiqi"></i>
           <span>延时器</span>
         </div>
         <div class="nsidebar-item" draggable="true" name="trigger" data-show="触发器" type="activity">
-          <i class="iconfont icon-18shengmingzhouqi"></i>
+          <i class="iconfont icon-chufaqi"></i>
           <span>触发器</span>
         </div>
         <div class="nsidebar-item" draggable="true" name="data" data-show="数据流" type="activity">
-          <i class="iconfont icon-18shengmingzhouqi"></i>
+          <i class="iconfont icon-zhuxingtu"></i>
           <span>数据流</span>
         </div>
       </div>

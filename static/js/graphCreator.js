@@ -63,7 +63,7 @@ document.onload = (function(d3, saveAs, Blob, vkbeautify) {
     thisGraph.svg = svg;
     thisGraph.show_position = svg.append("text")
       .attr({
-        'x': 1107,
+        'x': 700,
         'y': 15,
         'fill': '#E1784B'
       });

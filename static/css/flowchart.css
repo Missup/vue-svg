@@ -599,7 +599,7 @@ body {
     width: 280px;
 }
 .nsys {
-    top:  250px;
+    top:  260px;
 }
 .nglobal-title, .nsys-title {
     height: 40px;
@@ -617,11 +617,17 @@ body {
 .nglobal-content div:last-child, .nsys-content div:last-child {
     margin-bottom: 0;
 }
-.nglobal-content label {
+.nglobal-content label, .nsys-content label, .nsys-content span.active {
     width: 70px;
     display: inline-block;
 }
-.nglobal-content input[type=text] {
+.nglobal-content label.active {
+    width: 53px;
+}
+.nsys-content label.active {
+    width: 40px;
+}
+.nglobal-content input[type=text], .nsys-content input[type=text] {
     height: 28px;
     border: 1px solid #475b76;
     border-radius: 4px;
@@ -629,4 +635,78 @@ body {
     padding: 0 4px;
     color: #fff;
     width: 178px;
+}
+.nglobal-content span {
+    display: none;
+}
+.nglobal-content span input[type=text] {
+    width: 54px;
+}
+.nsys-content input[type=button] {
+    width: 100px;
+    height: 30px;
+    border-radius: 4px;
+    background-color: #5e6e90;
+    color: #fff;
+    margin-left: 73px;
+}
+.nsys-content input[type=button].active {
+    background-color: #00af83;
+}
+.nsys-footer {
+    height: 40px;
+    width: 100%;
+    border-top: 1px solid #313d4f;
+    position: relative;
+    margin-top: 16px;
+    display: none;
+}
+.nsys-footer-line {
+    position: absolute;
+    bottom: 0;
+    left: -14px;
+    background-color: #24415f;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 14px;
+    width: 280px;
+}
+.nsys-footer-line i {
+    position: absolute;
+    right: 14px;
+    cursor: pointer;
+}
+/* lines */
+.nlines {
+    position: absolute;
+    right: 300px;
+    top: 14px;
+}
+.nlines div {
+    float: left;
+    margin-left: 16px;
+}
+.nlines-normal {
+    color: #35907f;
+}
+.nlines-error {
+    color: #e05a1b;
+}
+.nlines-pass {
+    color: #6790c6;
+}
+.nlines div span {
+    width: 32px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+}
+.nlines-normal span {
+    border-top: 1px solid #35907f;
+}
+.nlines-error span {
+    border-top: 1px dashed #e05a1b;
+}
+.nlines-pass span {
+    border-top: 1px dashed #6790c6;
 }
