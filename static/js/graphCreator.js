@@ -213,7 +213,7 @@ document.onload = (function(d3, saveAs, Blob, vkbeautify) {
     // 2018.6.26 begin
     $('#flowComponents .nsidebar-item').attr('draggable', 'true')
       .on('dragstart', function(ev) {
-        $('.full-right>.tab.active .full-right-top').addClass('activate');
+        // $('.full-right>.tab.active .full-right-top').addClass('activate');
         var json_obj = {
           text: $(this).attr('data-show'),
           component: $(this).attr('name'),
@@ -222,7 +222,7 @@ document.onload = (function(d3, saveAs, Blob, vkbeautify) {
         ev.originalEvent.dataTransfer.setData('tr_data', JSON.stringify(json_obj));
       })
       .on('dragend', function(ev) {
-        $('.full-right>.tab.active .full-right-top').removeClass('activate');
+        // $('.full-right>.tab.active .full-right-top').removeClass('activate');
       });
     // 2018.6.26 end
 
@@ -230,7 +230,7 @@ document.onload = (function(d3, saveAs, Blob, vkbeautify) {
       .on('dragstart', function(ev) {
         // $('.full-left').css({cursor: 'no-drop'});
         $(this).siblings().removeClass('active').end().addClass('active');
-        $('.full-right>.tab.active .full-right-top').addClass('activate');
+        // $('.full-right>.tab.active .full-right-top').addClass('activate');
         /* 设置拖动过程显示图片
         var icon = document.createElement('img');
         icon.src = $(this).find('img').attr('src');
@@ -243,7 +243,7 @@ document.onload = (function(d3, saveAs, Blob, vkbeautify) {
         ev.originalEvent.dataTransfer.setData('tr_data', JSON.stringify(json_obj));
       })
       .on('dragend', function(ev) {
-        $('.full-right>.tab.active .full-right-top').removeClass('activate');
+        // $('.full-right>.tab.active .full-right-top').removeClass('activate');
       }); 
     $('.full-right .tab.active').on('drop', '.svg-container', function(ev) {
       ev.stopPropagation(); 
@@ -2873,6 +2873,13 @@ function initCommonEvent() {
   $('#rMenu .item').on('click', handleRightMenu);
   // 自动插入开始结束节点
   $('.full-left [name=addStartEndBtn]').on('click', handleAddStartEnd);
+  // 展开收缩
+  $('.ncommon-title').not('.noopen').on('click', handleClickOpen)
+  // 左侧组件点击
+  $('#flowComponents .nsidebar-item').not('.nsidebar-popup').on('click', handleSidebars)
+  $('.nsidebar-popup').on('click', handleSidebarsPop)
+  // 点击超时设置
+  $('.checkbox.ndelay').on('click', handleCheckbox)
 }
 
 function initFlowChart() {

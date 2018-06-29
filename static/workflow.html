@@ -17,21 +17,25 @@
 <body>
   <!-- 顶部栏 -->
   <div class="nheader clearfix">
-    <div class="nheader-nav fl">
+    <div class="ui breadcrumb nheader-nav fl">
       <i class="iconfont icon-zhankai"></i>
-      <a href="#">default</a>
-      /
-      <a href="#">default</a>
-      /
-      <a href="#">test</a>
+      <a class="section">default</a>
+      <div class="divider"> / </div>
+      <a class="section">default</a>
+      <div class="divider"> / </div>
+      <div class="active section">T-Shirt</div>
     </div>
+
     <div class="nheader-btns">
-      <span class="active">设计模式</span><span>调试模式</span>
+      <div class="ui buttons nheader-btns">
+        <button class="ui blue button">设计模式</button>
+        <button class="ui blue button default">调试模式</button>
+      </div>
     </div>
     <div class="nheader-actions fr">
-      <span class="nheader-save">保存</span>
-      <span>保存并发布</span>
-      <span class="nheader-signout">导出</span>
+      <button class="ui teal button nheader-save">保存</button>
+      <button class="ui teal button">保存并发布</button>
+      <button class="ui blue button nheader-signout">导出</button>
     </div>
   </div>
 
@@ -39,15 +43,9 @@
   <div class="subheader editor-toolbar">
     <div class="column pop-btn" data-content="保存" data-position="bottom center" data-variation="mini"><i class="save icon"></i></div>
     <div class="divider"></div>
-    <!-- <div class="column pop-btn" data-content="剪切" data-position="bottom center" data-variation="mini"><i class="cut icon"></i></div>
-    <div class="column pop-btn" data-content="复制" data-position="bottom center" data-variation="mini"><i class="copy icon"></i></div>
-    <div class="column pop-btn" id="test-loadXML" data-content="粘贴" data-position="bottom center" data-variation="mini"><i class="paste icon"></i></div> -->
     <div class="column pop-btn" id="delete-graph" data-content="清空" data-position="bottom center" data-variation="mini"><i class="trash icon"></i></div>
     <div class="column pop-btn" id="delete-ele" data-content="删除" data-position="bottom center" data-variation="mini"><i class="remove icon"></i></div>
     <div class="divider"></div>
-    <!-- <div class="column pop-btn" data-content="撤销" data-position="bottom center" data-variation="mini"><i class="repeat icon"></i></div>
-    <div class="column pop-btn" data-content="恢复" data-position="bottom center" data-variation="mini"><i class="undo icon"></i></div>
-    <div class="divider"></div> -->
     <div class="column pop-btn" id="zoom-enlarge" data-content="放大" data-position="bottom center" data-variation="mini"><i class="zoom icon"></i></div>
     <div class="column pop-btn" id="zoom-narrow" data-content="缩小" data-position="bottom center" data-variation="mini"><i class="zoom out icon"></i></div>
     <div class="column pop-btn" id="reset-zoom" data-content="归位" data-position="bottom center" data-variation="mini"><i class="maximize icon"></i></div>
@@ -66,72 +64,76 @@
     </div>
 
     <!-- 右侧属性控件 -->
-    <div class="nglobal">
-      <div class="nglobal-title">
-        <span><i class="iconfont icon-peizhi"></i>工作流全局配置</span>
-        <i class="iconfont icon-zhankai1"></i>
+    <div class="nsideRight">
+      <div class="nglobal">
+        <div class="nglobal-title ncommon-title">
+          <span class="fl"><i class="iconfont icon-peizhi"></i>工作流全局配置</span>
+          <i class="iconfont icon-zhankai1 fr"></i>
+        </div>
+        <div class="nglobal-content ncommon-content">
+          <div>
+            <label for="nglobal-name">名称：</label>
+            <input type="text" id="nglobal-name">
+          </div>
+          <div>
+            <label for="nglobal-desc">描述：</label>
+            <input type="text" id="nglobal-desc">
+          </div>
+          <div>
+            <label for="nglobal-time">调度周期：</label>
+            <input type="text" id="nglobal-time">
+          </div>
+          <div class="timeout">
+            <div class="ui checkbox ndelay">
+              <input name="example" type="checkbox">
+              <label class="active">超时设置</label>
+            </div>
+            <span class="nglobal-timeout">
+              <input type="text"> 小时 <input type="text"> 分钟
+            </span>
+          </div>
+          <div>
+            <label for="nglobal-state">并发度：</label>
+            <input type="text" id="nglobal-state">
+          </div>
+        </div>
       </div>
-      <div class="nglobal-content">
-        <div>
-          <label for="nglobal-name">名称：</label>
-          <input type="text" id="nglobal-name">
+      <div class="nsys">
+        <div class="nsys-title ncommon-title">
+          <span class="fl"><i class="iconfont icon-geziliebiao"></i>工作流参数配置</span>
+          <i class="iconfont icon-zhankai1 fr"></i>
         </div>
-        <div>
-          <label for="nglobal-desc">描述：</label>
-          <input type="text" id="nglobal-desc">
-        </div>
-        <div>
-          <label for="nglobal-time">调度周期：</label>
-          <input type="text" id="nglobal-time">
-        </div>
-        <div>
-          <input type="checkbox" id="nglobal-timeout">
-          <label for="nglobal-timeout" class="active">超时设置</label>
-          <span>
-            <input type="text"> 小时 <input type="text"> 分钟
-          </span>
-        </div>
-        <div>
-          <label for="nglobal-state">并发度：</label>
-          <input type="text" id="nglobal-state">
-        </div>
-      </div>
-    </div>
-
-    <div class="nsys">
-      <div class="nsys-title">
-        <span><i class="iconfont icon-geziliebiao"></i>工作流参数配置</span>
-        <i class="iconfont icon-zhankai1"></i>
-      </div>
-      <div class="nsys-content">
-        <div>
-          <label for="nsys-id">参数名：</label>
-          <input type="text" id="nsys-name">
-        </div>
-        <div>
-          <span class="active">类型：</span>
-          <span>
-            <input name="sys" type="radio" checked="checked" id="nsys-const">
-            <label for="nsys-const" class="active">常量</label>
-          </span>
-          <span>
-            <input name="sys" type="radio" id="nsys-let">
-            <label for="nsys-let" class="active">变量</label>
-          </span>
-        </div>
-        <div>
-          <label for="nsys-id">表达式：</label>
-          <input type="text" id="nsys-compute">
-        </div>
-        <input type="button" value="添加" disabled="disabled">
-        <div class="nsys-footer">
-          <div class="nsys-footer-line">
-            brief = some infomation
-            <i>x</i>
+        <div class="nsys-content ncommon-content">
+          <div>
+            <label for="nsys-name">参数名：</label>
+            <input type="text" id="nsys-name">
+          </div>
+          <div>
+            <span class="active">类型：</span>
+            <div class="ui radio checkbox">
+              <input name="frequency" checked="checked" type="radio">
+              <label>常量</label>
+            </div>
+            <div class="ui radio checkbox">
+              <input name="frequency" type="radio">
+              <label>变量</label>
+            </div>
+          </div>
+          <div>
+            <label for="nsys-compute">表达式：</label>
+            <input type="text" id="nsys-compute">
+          </div>
+          <input type="button" value="添加" disabled="disabled">
+          <div class="nsys-footer">
+            <div class="nsys-footer-line">
+              brief = some infomation
+              <i>x</i>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    
 
     <div class="nlines clearfix">
       <div class="nlines-normal">正常<span></span></div>
@@ -141,11 +143,11 @@
 
     <!-- 左侧控件 -->
     <div id="flowComponents" class="full-left">
-      <div class="nsidebar-title">
-        <span><i class="iconfont icon-zhankai"></i>任务类型</span>
-        <i class="iconfont icon-zhankai1"></i>
+      <div class="nsidebar-title ncommon-title">
+        <span class="fl"><i class="iconfont icon-zhankai"></i>任务类型</span>
+        <i class="iconfont icon-zhankai1 fr"></i>
       </div>
-      <div class="nsidebar-content">
+      <div class="nsidebar-content ncommon-content">
         <div class="nsidebar-item" draggable="true" name="code" data-show="脚本" type="activity">
           <i class="iconfont icon-jiaoben"></i>
           <span>脚本</span>
@@ -154,15 +156,15 @@
           <i class="iconfont icon-sql"></i>
           <span>SQL</span>
         </div>
-        <div class="nsidebar-item" draggable="true" name="clock" data-show="延时器" type="activity">
+        <div class="nsidebar-item nsidebar-popup" draggable="true" name="clock" data-show="延时器" type="activity">
           <i class="iconfont icon-jishiqi"></i>
           <span>延时器</span>
         </div>
-        <div class="nsidebar-item" draggable="true" name="trigger" data-show="触发器" type="activity">
+        <div class="nsidebar-item nsidebar-popup" draggable="true" name="trigger" data-show="触发器" type="activity">
           <i class="iconfont icon-chufaqi"></i>
           <span>触发器</span>
         </div>
-        <div class="nsidebar-item" draggable="true" name="data" data-show="数据流" type="activity">
+        <div class="nsidebar-item nsidebar-popup" draggable="true" name="data" data-show="数据流" type="activity">
           <i class="iconfont icon-zhuxingtu"></i>
           <span>数据流</span>
         </div>
@@ -281,7 +283,7 @@
   <!-- 属性弹出层 start -->
   <div class="ui coupled modal prop_node">
     <i class="close cancel icon"></i>
-      <div class="ui pointing secondary menu">
+    <div class="ui pointing secondary menu">
       <a class="item active" data-tab="one">常规</a>
       <a class="item" data-tab="two_1">工具</a>
       <a class="item hideitem" data-tab="two_2">块活动</a>
@@ -758,105 +760,103 @@
   </div><!-- 属性弹出层 end -->
 
   <!-- 活动属性-常规-定义 -->
-  <div class="ui coupled small modal tab conventional_definition def_common">
-        
-    </div>
+  <div class="ui coupled small modal tab conventional_definition def_common"></div>
 
-    <!-- 活动属性-工具-添加 -->
+  <!-- 活动属性-工具-添加 -->
   <div class="ui coupled small modal tab segment tool_add">
         <div class="ui mini form">
           <div class="fields">
             <div class="five wide field">
-                  <label>类型:</label>
-                  <select class="ui search dropdown">
+              <label>类型:</label>
+              <select class="ui search dropdown">
                 <option value="">请选择</option>
                 <option value="1">应用</option>
                 <option value="2">程序</option>
-          </select>               
-              </div>
-              <div class="ten wide field">
-            <label>应用:</label>
-          <div class="two fields">
-            <div class="field">
-                        <select class="ui search dropdown">
+              </select>               
+            </div>
+            <div class="ten wide field">
+              <label>应用:</label>
+              <div class="two fields">
+                <div class="field">
+                  <select class="ui search dropdown">
                     <option value="">请选择</option>
                     <option value="1">修改数据</option>
                     <option value="2">发送邮件</option>
                     <option value="3">执行其它toolagent</option>
                     <option value="4">获取数据</option>
-              </select>               
-                    </div>
-                    <div class="five wide field">
-              <button class="ui facebook mini button definitionBtn"><i class="write icon"></i>定义</button>
-                    </div>
+                  </select>               
+                </div>
+                <div class="five wide field">
+                  <button class="ui facebook mini button definitionBtn"><i class="write icon"></i>定义</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ui horizontal divider">实际参数集</div>
+          <div class="ui grid">
+            <div class="row">
+              <div class="ten wide tablet column">
+                <table class="ui blue sortable selectable celled striped compact table">
+                  <thead>
+                    <tr>
+                      <th class="one wide">选择</th>
+                      <th class="two wide">应用</th>
+                      <th class="two wide">类型</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr id="tr1">
+                      <td>
+                        <div class="ui radio checkbox">
+                          <input type="radio" name="selectAnswer" tabindex="0" class="hidden">
+                        </div>
+                      </td>
+                      <td>1111111</td>
+                      <td>Aell</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="three wide column">
+                <div class="ui vertical">
+                  <button class="ui positive basic mini button actualParametersAdd1"><i class="icon plus"></i> 添 加</button>
+                  <button class="ui primary basic mini button"><i class="icon write"></i> 编 辑</button>
+                  <button class="ui negative basic mini button"><i class="icon remove"></i> 删 除</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ui divider hidden"></div>
+            <div class="field">
+              <label>描述：</label>
+              <textarea rows="2"></textarea>
+            </div>
+            <div class="ui horizontal divider">扩展属性集</div>
+              <div class="ui grid">
+                <div class="row">
+                  <div class="ten wide tablet computer column">
+                    <table class="ui blue sortable selectable celled striped compact table">
+                      <thead>
+                        <tr>
+                          <th class="one wide">选择</th>
+                          <th class="two wide">应用</th>
+                          <th class="two wide">类型</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr id="tr1">
+                          <td>
+                            <div class="ui radio checkbox">
+                              <input type="radio" name="selectAnswer" tabindex="0" class="hidden">
+                            </div>
+                          </td>
+                          <td>1111111</td>
+                          <td>Aell</td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
-              </div>
-          </div>
-            <div class="ui horizontal divider">实际参数集</div>
-            <div class="ui grid">
-            <div class="row">
-            <div class="ten wide tablet column">
-              <table class="ui blue sortable selectable celled striped compact table">
-              <thead>
-                <tr>
-                  <th class="one wide">选择</th>
-                  <th class="two wide">应用</th>
-                  <th class="two wide">类型</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr id="tr1">
-                  <td>
-                    <div class="ui radio checkbox">
-                      <input type="radio" name="selectAnswer" tabindex="0" class="hidden">
-                    </div>
-                  </td>
-                  <td>1111111</td>
-                  <td>Aell</td>
-                </tr>
-              </tbody>
-            </table>
-            </div>
-            <div class="three wide column">
-              <div class="ui vertical">
-                <button class="ui positive basic mini button actualParametersAdd1"><i class="icon plus"></i> 添 加</button>
-              <button class="ui primary basic mini button"><i class="icon write"></i> 编 辑</button>
-              <button class="ui negative basic mini button"><i class="icon remove"></i> 删 除</button>
-              </div>
-            </div>
-          </div>
-        </div>
-            <div class="ui divider hidden"></div>
-      <div class="field">
-            <label>描述：</label>
-            <textarea rows="2"></textarea>
-        </div>
-      <div class="ui horizontal divider">扩展属性集</div>
-      <div class="ui grid">
-            <div class="row">
-            <div class="ten wide tablet computer column">
-              <table class="ui blue sortable selectable celled striped compact table">
-              <thead>
-                <tr>
-                  <th class="one wide">选择</th>
-                  <th class="two wide">应用</th>
-                  <th class="two wide">类型</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr id="tr1">
-                  <td>
-                    <div class="ui radio checkbox">
-                      <input type="radio" name="selectAnswer" tabindex="0" class="hidden">
-                    </div>
-                  </td>
-                  <td>1111111</td>
-                  <td>Aell</td>
-                </tr>
-              </tbody>
-            </table>
-            </div>
-            <div class="three wide column">
+              <div class="three wide column">
               <div class="ui vertical">
                 <button class="ui positive basic mini button actualParametersAdd2"><i class="icon plus"></i> 添 加</button>
               <button class="ui primary basic mini button"><i class="icon write"></i> 编 辑</button>
@@ -865,8 +865,8 @@
             </div>
           </div>
         </div>
-      <div class="ui divider hidden"></div>
-        <div class="actions inverted segment clearfix">
+    <div class="ui divider hidden"></div>
+      <div class="actions inverted segment clearfix">
         <button class="ui right floated green inverted ok button">
           <i class="checkmark icon"></i>确定
         </button>
@@ -875,8 +875,9 @@
         </button>
       </div>    
     </div>
-    </div>
-    <!-- 工具-添加-添加 -->
+  </div>
+
+  <!-- 工具-添加-添加 -->
   <div class="ui coupled small modal tab segment actualParametersDiv">
         <div class="ui mini form">
           <div class="field">
@@ -898,7 +899,7 @@
               </div>
             </div>
         </div>
-      <div class="actions inverted segment clearfix">
+    <div class="actions inverted segment clearfix">
       <button class="ui right floated green inverted ok button">
         <i class="checkmark icon"></i>确定
       </button>
@@ -906,8 +907,9 @@
         <i class="remove icon"></i>取消
       </button>
     </div>    
-    </div>
-    <!-- 工具-添加-添加-定义 -->
+  </div>
+
+  <!-- 工具-添加-添加-定义 -->
   <div class="ui coupled small modal tab segment toolAddDefinition">
       <div class="header">工作流相关数据集</div>
       <div class="ui mini form grid">
@@ -965,6 +967,7 @@
       </button>
     </div>    
   </div>
+
   <!-- 工具-添加-添加-定义-添加 -->
   <div class="ui coupled large modal tab segment toolAddDefinitionAdd">
     <i class="close icon"></i>
@@ -1064,8 +1067,8 @@
     </div>
   </div>
 
-    <!-- 工具-添加-定义 -->
-    <div class="ui coupled small modal tab segment tooldefinition">
+  <!-- 工具-添加-定义 -->
+  <div class="ui coupled small modal tab segment tooldefinition">
       <div class="header">应用集-定义</div>
       <div class="ui horizontal divider"></div>
       <div class="ui mini form grid">
@@ -1129,6 +1132,7 @@
       </button>
     </div>    
   </div>
+
   <!-- 工具-添加-定义-添加 -->
   <div class="ui coupled large modal tab segment tooldefinition_add">
     <div class="ui mini form">
@@ -1232,6 +1236,7 @@
       </div>    
     </div>
   </div>
+
   <!-- 工具-添加-定义-添加-添加 -->
   <div class="ui coupled small modal tab segment tooldefinition_add_add">
     <div class="ui mini form">
@@ -1279,7 +1284,8 @@
       </button>
     </div>    
   </div>
-    <!-- 工具-添加-扩展属性添加 -->
+
+  <!-- 工具-添加-扩展属性添加 -->
   <div class="ui coupled small modal tab segment tool_extendAttr_add">
         <div class="ui mini form">
           <div class="fields">
@@ -1292,19 +1298,20 @@
               <input name="extendAttr_add_value" type="text" placeholder="值">
           </div>
           </div>
-      <div class="ui divider hidden"></div>
-        <div class="actions inverted segment clearfix">
-        <button class="ui right floated green inverted ok button">
-          <i class="checkmark icon"></i>确定
-        </button>
-        <button class="ui right floated red inverted cancel button">
-          <i class="remove icon"></i>取消
-        </button>
-      </div>
-      <input type="hidden" name="extendAttr_add_operate" value="">    
+    <div class="ui divider hidden"></div>
+      <div class="actions inverted segment clearfix">
+      <button class="ui right floated green inverted ok button">
+        <i class="checkmark icon"></i>确定
+      </button>
+      <button class="ui right floated red inverted cancel button">
+        <i class="remove icon"></i>取消
+      </button>
     </div>
+    <input type="hidden" name="extendAttr_add_operate" value="">    
     </div>
-    <!-- 后置条件-扩展属性-添加 -->
+  </div>
+
+  <!-- 后置条件-扩展属性-添加 -->
   <div class="ui coupled small modal tab segment postCondition_extendAttr_add">
         <div class="ui mini form">
           <div class="fields">
@@ -1317,8 +1324,8 @@
               <input name="extendAttr_add_value" type="text" placeholder="值">
           </div>
           </div>
-      <div class="ui divider hidden"></div>
-        <div class="actions inverted segment clearfix">
+    <div class="ui divider hidden"></div>
+      <div class="actions inverted segment clearfix">
         <button class="ui right floated green inverted ok button">
           <i class="checkmark icon"></i>确定
         </button>
@@ -1328,9 +1335,10 @@
       </div>
       <input type="hidden" name="extendAttr_add_operate" value="">    
     </div>
-    </div>
-    <!-- 后置条件-条件设置-关系设置 -->
-    <div class="ui coupled small modal tab segment relationshipPlacement">
+  </div>
+
+  <!-- 后置条件-条件设置-关系设置 -->
+  <div class="ui coupled small modal tab segment relationshipPlacement">
       <i class="close icon"></i>
       <div class="header">关系设置</div>
       <div class="ui mini form">
@@ -1379,8 +1387,9 @@
         </button>
       </div>
     </div>
-    </div>
-    <!-- 活动属性-扩展属性-添加 -->
+  </div>
+    
+  <!-- 活动属性-扩展属性-添加 -->
   <div class="ui coupled small modal tab segment extendAttr_add">
         <div class="ui mini form">
           <div class="fields">
@@ -1404,8 +1413,9 @@
       </div>
       <input type="hidden" name="extendAttr_add_operate" value="">    
     </div>
-    </div>
-    <!-- 超时限制-增加 -->
+  </div>
+
+  <!-- 超时限制-增加 -->
   <div class="ui coupled small modal tab segment timeoutLimit_add">
         <div class="ui mini form">
           <div class="five wide field">
@@ -1436,8 +1446,9 @@
         <i class="remove icon"></i>取消
       </button>
     </div>    
-    </div>
-    <!-- 监控信息-增加 -->
+  </div>
+ 
+  <!-- 监控信息-增加 -->
   <div class="ui coupled small modal tab segment monitorinf_add" parentsModal="prop_node">
         <div class="ui mini form">
           <div class="field">
@@ -1463,9 +1474,10 @@
         <i class="remove icon"></i>取消
       </button>
     </div>    
-    </div>
-    <!-- 监控信息-增加-定义 -->
-    <div class="ui coupled small modal tab monitorinfAddDefinition def_common">
+  </div>
+
+  <!-- 监控信息-增加-定义 -->
+  <div class="ui coupled small modal tab monitorinfAddDefinition def_common">
         <div class="ui pointing secondary menu">
         <a class="item active" data-tab="definition_one">常规</a>
         <a class="item" data-tab="definition_two">高级</a>
@@ -1673,9 +1685,9 @@
         <i class="remove icon"></i>取消
       </button>
     </div>
-    </div>
+  </div>
 
-    <!-- 连线属性弹出层 -->
+  <!-- 连线属性弹出层 -->
   <div class="ui coupled modal tab segment prop_edge">
     <div class="header">转移属性</div>
         <div class="ui mini form">
@@ -1692,9 +1704,10 @@
         <i class="remove icon"></i>取消
       </button>
     </div>    
-    </div>
-    <!-- 选择角色弹出层 -->
-    <div class="ui coupled modal tab role_manage">
+  </div>
+
+  <!-- 选择角色弹出层 -->
+  <div class="ui coupled modal tab role_manage">
       <i class="close icon"></i>
       <div id="role-top" class="topfont addborder popup">
       <i class="add user icon"></i>角色管理
@@ -1724,6 +1737,203 @@
       </div>
     </div>
     <div id="pageDiv"></div>
+  </div>
+
+  <!-- 脚本和sql的配置界面 -->
+  <div class="ui coupled modal tab nsetting">
+    <i class="close icon"></i>
+    <div class="header">脚本任务</div>
+    <div class="nsetting-main clearfix">
+      <div class="nsetting-left fl nsideRight">
+        <div class="nglobal">
+          <div class="nglobal-title ncommon-title noopen">任务设置</div>
+          <div class="nglobal-content ncommon-content">
+            <div>
+              <label for="nglobal-name1">名称：</label>
+              <input type="text" id="nglobal-name1">
+            </div>
+            <div>
+              <label for="nglobal-desc1" class="desc">描述：</label>
+              <textarea class="nglobal-desc" id="nglobal-desc1"></textarea>
+            </div>
+            <div class="radio advance">
+              <span class="active">优先级：</span>
+              <div class="ui radio checkbox">
+                <input name="advance" checked="checked" type="radio">
+                <label>高</label>
+              </div>
+              <div class="ui radio checkbox">
+                <input name="advance" type="radio">
+                <label>中</label>
+              </div>
+              <div class="ui radio checkbox">
+                <input name="advance" type="radio">
+                <label>低</label>
+              </div>
+            </div>
+            <div class="radio state">
+              <span class="active">运行状态：</span>
+              <div class="ui radio checkbox">
+                <input name="state" checked="checked" type="radio">
+                <label>开启</label>
+              </div>
+              <div class="ui radio checkbox">
+                <input name="state" type="radio">
+                <label>关闭</label>
+              </div>
+            </div>
+            <div>
+              <label for="nglobal-yl">依赖策略：</label>
+              <input type="text" id="nglobal-yl" value="正常">
+            </div>
+            <div class="timeout">
+              <div class="ui checkbox ndelay">
+                <input name="example" type="checkbox">
+                <label class="active">超时设置</label>
+              </div>
+              <span class="nglobal-timeout">
+                <input type="text"> 时 <input type="text"> 分
+              </span>
+            </div>
+            <div>
+              <label for="nglobal-reply">错误重试：</label>
+              <input type="text" id="nglobal-reply">
+            </div>
+            <div>
+              <label for="nglobal-delay">间隔：</label>
+              <input type="text" id="nglobal-delay">
+            </div>
+          </div>
+        </div>
+        <div class="nsys">
+          <div class="nsys-title ncommon-title noopen">参数配置</div>
+          <div class="nsys-content ncommon-content">
+            <div>
+              <label for="nsys-name1">参数名：</label>
+              <input type="text" id="nsys-name1">
+            </div>
+            <div class="radio frequency">
+              <span class="active">类型：</span>
+              <div class="ui radio checkbox">
+                <input name="frequency1" checked="checked" type="radio">
+                <label>常量</label>
+              </div>
+              <div class="ui radio checkbox">
+                <input name="frequency1" type="radio">
+                <label>变量</label>
+              </div>
+            </div>
+            <div>
+              <label for="nsys-compute1">表达式：</label>
+              <input type="text" id="nsys-compute1">
+            </div>
+            <input type="button" value="添加" disabled="disabled">
+            <div class="nsys-footer">
+              <div class="nsys-footer-line">
+                brief = some infomation
+                <i>x</i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="nsetting-right fr">
+        <div class="nsetting-right-set">
+          <div class="ncommon-title noopen">任务设置</div>
+          <div class="nsetting-right-radio">
+            <div class="nsetting-right-url sql">
+              <label for="nglobal-url">jdbc url</label>
+              <input type="text" id="nglobal-url">
+            </div>
+            <span class="nsetting-right-name">认证类型</span>
+            <div class="ui radio checkbox sql one">
+              <input name="classify" type="radio">
+              <label>密码认证</label>
+            </div>
+            <div class="ui radio checkbox sql">
+              <input name="classify" type="radio">
+              <label>Key Tab</label>
+            </div>
+            <div class="ui radio checkbox one code">
+              <input name="classify" type="radio">
+              <label>Kerberos</label>
+            </div>
+            <div class="ui radio checkbox default">
+              <input name="classify" type="radio" checked="checked">
+              <label>无认证</label>
+            </div>
+            <div class="nsetting-right-input">
+              <div>
+                <label for="nglobal-key" class="name">Keytab</label>
+                <!-- <label for="nglobal-key">用户名</label> -->
+                <input type="text" id="nglobal-key">
+              </div>
+              <div>
+                <label for="nglobal-password" class="password">Principal</label>
+                <!-- <label for="nglobal-password">密码</label> -->
+                <input type="password" id="nglobal-password">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nsetting-right-content">
+          <div class="ncommon-title noopen">脚本内容</div>
+          <div class="nsetting-right-txt">
+            <textarea></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="nsetting-save">
+      <button class="ui green button">保存</button>
+    </div>
+  </div>
+  <!-- 延时器和触发器的配置界面 -->
+  <div class="ui coupled modal tab npopup">
+    <i class="close icon"></i>
+    <div class="header">延时器</div>
+    <div class="npopup-main">
+      <div class="npopup-item">
+        <label for="nglobal-name2">名称：</label>
+        <input type="text" id="nglobal-name2">
+      </div>
+      <div class="npopup-item">
+        <label for="nglobal-desc2" class="desc">描述：</label>
+        <textarea class="nglobal-desc" id="nglobal-desc2"></textarea>
+      </div>
+      <div class="npopup-item delaytime">
+        <label for="nglobal-delaytime" class="desc">延迟时间：</label>
+        <input type="text" id="nglobal-delaytime">
+        <select class="ui dropdown">
+          <option value="0">天</option>
+          <option value="1">小时</option>
+          <option value="2">分钟</option>
+          <option value="3">秒</option>
+        </select>
+      </div>
+      <div class="npopup-item trigger">
+        <label for="nglobal-task">选择任务：</label>
+        <input type="text" id="nglobal-task"></input>
+      </div>
+      <div class="npopup-item trigger radio">
+        <span>周期：</span>
+        <div class="ui radio checkbox">
+          <input name="frequency2" type="radio">
+          <label>自定义</label>
+        </div>
+        <div class="ui radio checkbox">
+          <input name="frequency2" checked="checked" type="radio">
+          <label>当天</label>
+        </div>
+      </div>
+      <div class="npopup-item trigger">
+        <label for="nglobal-yl1">依赖策略：</label>
+        <input type="text" id="nglobal-yl1" value="正常">
+      </div>
+    </div>
+    <div class="npopup-save">
+      <button class="ui green button">保存</button>
+    </div>
   </div>
 
   <!-- 引入jq -->

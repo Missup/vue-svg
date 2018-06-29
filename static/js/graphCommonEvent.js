@@ -116,8 +116,10 @@ function handleClickZoom() {
     extent = graph_active.dragSvg.scaleExtent(),
     direction = 1,
     factor = 0.1;
+  // extent = [0.3, 2]
+  // direction 1放大 -1缩小
   direction = (this.id === 'zoom-enlarge') ? 1 : -1;
-  if ((scale <= extent[0] && direction < 0) || (scale >= extent[1] && direction > 0)) {
+  if ((scale.toFixed(1) <= extent[0] && direction < 0) || (scale.toFixed(1) >= extent[1] && direction > 0)) {
     return;
   } else {
     scale = parseFloat(scale) + factor * direction;
@@ -125,6 +127,7 @@ function handleClickZoom() {
   graph_active.dragSvg.scale(scale)
       .translate(translate);
   graph_active.zoomed();
+  $('#zoom-txt').text(Math.round(100 * scale) + '%')
 }
 
 /**
@@ -137,6 +140,7 @@ function resetZoom() {
     .attr('transform', 'translate(0,0) scale(1)');
   graph_active.dragSvg.scale(1);
   graph_active.dragSvg.translate([0,0]);
+  $('#zoom-txt').text('100%')
 }
 
 /**
@@ -676,4 +680,74 @@ function edgeAssociateNode(jsonObj) {
     return edge;
   });
   return jsonObj;
+}
+
+// 展开收缩
+function handleClickOpen () {
+  var iconClass = $(this).find('i.fr').attr('class')
+  if (iconClass.indexOf('zhankai1') !== -1) {
+    $(this).siblings('.ncommon-content').hide()
+    $(this).find('i.fr').attr('class', 'iconfont icon-zhankai2 fr')
+  } else {
+    $(this).siblings('.ncommon-content').show()
+    $(this).find('i.fr').attr('class', 'iconfont icon-zhankai1 fr')
+  }
+}
+
+// 左侧组件
+function handleSidebars () {
+  var attrDatashow = $(this).attr('data-show')
+  $('.ui.modal.nsetting .header').text(attrDatashow + '任务')
+  $('.ui.modal.nsetting .nsetting-right-content .ncommon-title').text(attrDatashow + '内容')
+  if (attrDatashow === '脚本') {
+    $('.nsetting-right-set .code').show()
+    $('.nsetting-right-set .sql').hide()
+  } else {
+    $('.nsetting-right-set .code').hide()
+    $('.nsetting-right-set .sql').show()
+  }
+
+  $('.ui.modal.nsetting').modal('show');
+
+  $('.nsetting-right-set .checkbox.default').checkbox('check')
+
+  $('.nsetting-right-set .checkbox.one').checkbox({
+    onChecked: function () {
+      if ($(this).siblings('label').text() === '密码认证') {
+        $('.nsetting-right-input').find('label.name').text('用户名')
+        $('.nsetting-right-input').find('label.password').text('密码')
+      } else {
+        $('.nsetting-right-input').find('label.name').text('Keytab')
+        $('.nsetting-right-input').find('label.password').text('Principal')
+      }
+      $('.nsetting-right-input').show()
+    }
+  })
+
+  $('.nsetting-right-set .checkbox').not('.one').checkbox({
+    onChecked: function () {
+      $('.nsetting-right-input').hide()
+    }
+  })
+}
+
+function handleSidebarsPop () {
+  var attrDatashow = $(this).attr('data-show')
+  $('.ui.modal.npopup .header').text(attrDatashow)
+  if (attrDatashow === '延时器') {
+    $('.ui.modal.npopup').find('.npopup-item.delaytime').show()
+    $('.ui.modal.npopup').find('.npopup-item.trigger').hide()
+  } else {
+    $('.ui.modal.npopup').find('.npopup-item.delaytime').hide()
+    $('.ui.modal.npopup').find('.npopup-item.trigger').show()
+  }
+  $('.ui.modal.npopup').modal('show');
+}
+
+function handleCheckbox () {
+  if (!$(this).hasClass('checked')) {
+    $(this).siblings('.nglobal-timeout').show()
+  } else {
+    $(this).siblings('.nglobal-timeout').hide()
+  }
 }

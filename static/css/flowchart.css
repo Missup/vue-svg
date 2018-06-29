@@ -113,9 +113,9 @@ html, body {
     /* border: 1px dashed #FFF;  */
 }
 
-.full-right-top.activate {
+/* .full-right-top.activate {
     border: 1px dashed #37F537;
-}
+} */
 
 .view { 
     height: 100%; 
@@ -508,43 +508,23 @@ body {
     padding-left: 12px;
     padding-right: 24px;
 }
-.nheader-nav a {
-    margin: 0 6px;
+.nheader-nav.ui.breadcrumb {
+    margin-top: 17px;
+}
+.nheader-nav .icon-zhankai {
+    margin-right: 6px;
+}
+.nheader-nav.ui.breadcrumb .divider, .nheader-nav.ui.breadcrumb a {
+    color: #fff;
 }
 .nheader-btns {
     display: inline-block;
 }
-.nheader-btns span {
-    display: inline-block;
-    width: 82px;
-    height: 32px;
-    line-height: 32px;
+.ui.blue.button.default {
     background-color: #27436a;
-    cursor: pointer;
 }
-.nheader-btns span:first-child {
-    border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px;
-}
-.nheader-btns span:last-child {
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
-}
-.nheader-btns span.active {
-    background-color: #3ba8fb;
-}
-.nheader-actions span {
-    display: inline-block;
-    height: 32px;
-    line-height: 32px;
-    cursor: pointer;
-    background-color: #00b187;
-    padding: 0 24px;
-    border-radius: 4px;
-    margin-left: 4px;
-}
-.nheader-actions span:last-child {
-    background-color: #3aa8fd;
+.ui.blue.button.default:hover {
+    background-color: #213a5d;
 }
 /* zoom */
 .nzoom {
@@ -567,11 +547,15 @@ body {
     width: 52px;
 }
 /* sidebanr */
-.nsidebar-title {
+.nsidebar-title.ncommon-title {
     height: 40px;
     line-height: 40px;
     text-align: center;
     cursor: pointer;
+    padding: 0 10px;
+}
+.ncommon-title span.fl .iconfont {
+    margin-right: 6px;
 }
 .nsidebar-content {
     background-color: #1b2f48;
@@ -591,21 +575,23 @@ body {
     display: block;
 }
 /* 右侧控件 */
-.nglobal, .nsys {
+.nsideRight {
     position: absolute;
     right: 0;
     top: 6px;
-    background-color: #21345c;
     width: 280px;
+    font-size: 14px;
 }
 .nsys {
     top:  260px;
+    margin-top: 6px;
 }
-.nglobal-title, .nsys-title {
+.ncommon-title {
     height: 40px;
     line-height: 40px;
     padding: 0 14px;
     cursor: pointer;
+    background-color: #21345c;
 }
 .nglobal-content, .nsys-content {
     background-color: #1b2f47;
@@ -622,7 +608,7 @@ body {
     display: inline-block;
 }
 .nglobal-content label.active {
-    width: 53px;
+    width: 90px;
 }
 .nsys-content label.active {
     width: 40px;
@@ -635,12 +621,20 @@ body {
     padding: 0 4px;
     color: #fff;
     width: 178px;
+    font-size: 14px;
 }
-.nglobal-content span {
+.nglobal-content .nglobal-timeout {
     display: none;
 }
-.nglobal-content span input[type=text] {
-    width: 54px;
+.nglobal-content .nglobal-timeout input[type=text] {
+    width: 45px;
+}
+
+.ui.checkbox label, .ui.checkbox+label, .ui.checkbox input:focus~label, .ui.checkbox label:hover, .ui.checkbox+label:hover {
+    color: #fff;
+}
+.nsys-content .ui.radio.checkbox {
+    margin-bottom: 0;
 }
 .nsys-content input[type=button] {
     width: 100px;
@@ -709,4 +703,216 @@ body {
 }
 .nlines-pass span {
     border-top: 1px dashed #6790c6;
+}
+/* 配置弹窗 */
+.nsetting.ui.modal {
+    background-color: #1a3047;
+    width: 700px;
+    margin-left: -350px;
+}
+.nsetting.ui.modal>.header, .npopup.ui.modal>.header {
+    background-color: #2276c4;
+    color: #fff;
+    font-size: 14px;
+    font-weight: normal;
+    height: 42px;
+    line-height: 42px;
+    padding: 0 14px;
+}
+.nsetting .nsetting-save, .npopup .npopup-save {
+    text-align: center;
+    padding-bottom: 10px;
+}
+.nsetting-main, .npopup-main {
+    padding: 10px 6px;
+}
+.nsetting-left {
+    width: 234px;
+}
+.nsetting-right {
+    width: 440px;
+}
+.nsetting.ui.modal>.close, .npopup.ui.modal>.close {
+    top: 4px;
+    right: 0;
+}
+.nsetting-left.nsideRight {
+    position: relative;
+    right: 0;
+    top: 0;
+}
+.nsetting-left .nglobal, .nsetting-left .nsys {
+    border-radius: 4px;
+    overflow: hidden;
+}
+.nsetting-left .nglobal-content, .nsetting-left .nsys-content {
+    background-color: #1f3654;
+}
+.nsetting-main .ncommon-title {
+    background-color: #243d60;
+}
+.nsetting-left .nglobal-content input[type=text], .nsetting-left .nsys-content input[type=text] {
+    width: 132px;
+}
+.nsetting-left .nglobal-desc {
+    width: 132px;
+    height: 50px;
+    border: 1px solid #475b76;
+    border-radius: 4px;
+    background-color: #1a2b47;
+    padding: 4px;
+    color: #fff;
+    font-size: 14px;
+    line-height: 20px;
+}
+.nsetting-left .nglobal-content label.desc {
+    position: relative;
+    top: -30px;
+}
+.nsetting-left .nglobal-content .nglobal-timeout input[type=text] {
+    width: 36px;
+}
+.nglobal-content div.timeout {
+    line-height: 30px;
+}
+.nsetting-left .nglobal-content span.active {
+    width: 70px;
+    display: inline-block;
+}
+.nsetting-left div.radio.advance label {
+    width: 40px;
+    padding-left: 20px;
+}
+.nsetting-left div.radio.state label {
+    width: 64px;
+}
+.nsetting-left div.radio.frequency label {
+    width: 62px;
+}
+.nsetting-left .nsys-content input[type=button] {
+    margin-left: 48px;
+}
+.nsetting-right-set {
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 6px;
+}
+.nsetting-right-radio {
+    background-color: #1f3654;
+    padding: 20px 14px 30px;
+}
+.nsetting-right-radio .ui.checkbox.one {
+    margin-right: 10px;
+}
+.nsetting-right-txt {
+    background-color: #1f3654;
+    padding: 20px 14px;
+    height: 364px;
+    /* height: 444px; */
+}
+.nsetting-right-txt textarea {
+    width: 100%;
+    height: 100%;
+    background-color: #192d48;
+    border-radius: 4px;
+    border: none;
+    color: #fff;
+    font-size: 14px;
+    padding: 10px;
+    line-height: 20px;
+}
+.nsetting-right-content {
+    border-radius: 4px;
+    overflow: hidden;
+}
+.nsetting-right-input {
+    display: none;
+}
+.nsetting-right-input div {
+    margin-top: 12px;
+}
+.nsetting-right-radio label {
+    width: 58px;
+    display: inline-block;
+}
+.nsetting-right-radio input {
+    width: 350px;
+    height: 28px;
+    border: 1px solid #475b76;
+    border-radius: 4px;
+    background-color: #1a2b47;
+    padding: 0 4px;
+    color: #fff;
+    font-size: 14px;
+}
+.nsetting-right-radio .ui.radio.checkbox label {
+    width: auto;
+}
+.nsetting-right-url {
+    margin-bottom: 12px;
+}
+
+.npopup.ui.modal {
+    background-color: #1a3047;
+    width: 360px;
+    margin-left: -180px;
+}
+.npopup-main label {
+    display: inline-block;
+    width: 80px;
+}
+.npopup-main div.npopup-item:nth-child(2) label {
+    position: relative;
+    top: -36px;
+}
+.npopup-main input[type=text], .npopup-main textarea {
+    width: 256px;
+    height: 28px;
+    border: 1px solid #475b76;
+    border-radius: 4px;
+    background-color: #1a2b47;
+    padding: 0 4px;
+    color: #fff;
+    font-size: 14px;
+}
+.npopup-main div.npopup-item.delaytime input[type=text] {
+    width: 185px;
+}
+.npopup-main textarea {
+    height: 56px;
+    padding: 4px;
+    line-height: 20px;
+}
+.npopup-main div.npopup-item {
+    margin-bottom: 10px;
+}
+.npopup-main div.npopup-item:last-child {
+    margin-bottom: 0;
+}
+.npopup-main div.npopup-item.trigger.radio span {
+    display: inline-block;
+    width: 80px;
+}
+.npopup-main .ui.selection.dropdown {
+    display: inline-block;
+    min-width: 66px;
+    background: #192d48;
+    color: #fff;
+    border: 1px solid #475b76;
+}
+.npopup-main .ui.selection.visible.dropdown>.text:not(.default) {
+    color: #fff;
+}
+.npopup-main .ui.dropdown .menu .selected.item, .npopup-main .ui.dropdown.selected {
+    background: #1e90ff;
+}
+.npopup-main .ui.dropdown .menu {
+    background: #192d48;
+    color: #fff;
+}
+.npopup-main .ui.selection.dropdown .menu>.item {
+    border: none;
+}
+.npopup-main .ui.dropdown .menu>.item {
+    color: #fff;
 }
